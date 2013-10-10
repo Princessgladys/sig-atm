@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nama atm:</b>
+  <%= @lokasi_atm.nama_atm %>
+</p>
+
+<p>
+  <b>Bank:</b>
+  <%= @lokasi_atm.bank_id %>
+</p>
+
+<p>
+  <b>Jumlah tarik:</b>
+  <%= @lokasi_atm.jumlah_tarik_id %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @lokasi_atm.lat %>
+</p>
+
+<p>
+  <b>Lng:</b>
+  <%= @lokasi_atm.lng %>
+</p>
+
+
+<%= link_to 'Edit', edit_lokasi_atm_path(@lokasi_atm) %> |
+<%= link_to 'Back', lokasi_atms_path %>
