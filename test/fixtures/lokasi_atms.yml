@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nama_atm: MyString
+  bank_id: 1
+  jumlah_tarik_id: 1
+  lat: MyString
+  lng: MyString
+
+two:
+  nama_atm: MyString
+  bank_id: 1
+  jumlah_tarik_id: 1
+  lat: MyString
+  lng: MyString

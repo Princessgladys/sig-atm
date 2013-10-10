@@ -1,0 +1,37 @@
+<%= form_for(@lokasi_atm) do |f| %>
+  <% if @lokasi_atm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lokasi_atm.errors.count, "error") %> prohibited this lokasi_atm from being saved:</h2>
+
+      <ul>
+      <% @lokasi_atm.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nama_atm %><br />
+    <%= f.text_field :nama_atm %>
+  </div>
+  <div class="field">
+    <%= f.label :bank_id %><br />
+    <%= f.number_field :bank_id %>
+  </div>
+  <div class="field">
+    <%= f.label :jumlah_tarik_id %><br />
+    <%= f.number_field :jumlah_tarik_id %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br />
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lng %><br />
+    <%= f.text_field :lng %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
