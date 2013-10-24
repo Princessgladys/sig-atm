@@ -1,3 +1,57 @@
+<script type="text/javascript">
+  //global variable
+    var map = null;
+    var infoWindow = new google.maps.InfoWindow;
+    var center = new google.maps.LatLng(-8.67829132, 115.21475983);
+  //end
+
+  //initialize
+    function initialize() {
+      map = new google.maps.Map(document.getElementById("mapsGoogle"), {
+        center              : center,
+        zoom                : 13,
+        disableDefaultUI    : true,
+        mapTypeId           : 'roadmap',
+      });
+
+      //tampilkan marker ATM
+        $.getJSON("home.json", function(data) {
+          for(var i=0; i<data.length; i++){
+            var point = new google.maps.LatLng(parseFloat(data[i].lat),parseFloat(data[i].lng));
+            var nama_atm = data[i].nama_atm;
+            var id = data[i].id;
+            var html = "<b>"+ nama_atm +"</b>"+
+              "<hr size='1'>";
+
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point
+            });
+            
+            InfoWindow(marker, map, infoWindow, html);
+          };
+        });
+
+        //tampilkan infowindow setiap marker
+          function InfoWindow(marker, map, infoWindow, html) {
+            google.maps.event.addListener(marker, 'click', function() {
+              infoWindow.setContent(html);
+              infoWindow.open(map, marker);
+              map.setZoom(15);
+              map.setCenter(marker.getPosition());
+            });
+
+            google.maps.event.addListener(map, 'click', function() {
+              infoWindow.close();
+            });
+          };
+        //end
+      //end
+    };
+  //end
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
@@ -12,11 +66,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="well">
-    <div id="mapsGoogle" style="height:440px;">
-      <h3>WOE Maps Here!</h3>
-    </div>
-  </div>
+  <div id="mapsGoogle" class="well" style="height:440px;"></div>
 </div>
 
 <div class="row-fluid">
