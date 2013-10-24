@@ -1,9 +1,9 @@
-<div class="span8">
+<div class="span10">
   <table class="table table-striped table-bordered">
     <tr>
       <th>Nama Atm</th>
       <th>Nama Bank</th>
-      <th>Satuan Penarikan</th>
+      <th>Nominal</th>
       <th>Latitude</th>
       <th>Longitude</th>
       <th>Pilihan</th>
@@ -12,8 +12,8 @@
   <% @lokasi_atms.each do |lokasi_atm| %>
     <tr>
       <td><%= lokasi_atm.nama_atm %></td>
-      <td><%= lokasi_atm.bank_id %></td>
-      <td><%= lokasi_atm.jumlah_tarik_id %></td>
+      <td><%= lokasi_atm.bank.nama_bank %></td>
+      <td><%= lokasi_atm.jumlah_tarik.nominal %></td>
       <td><%= lokasi_atm.lat %></td>
       <td><%= lokasi_atm.lng %></td>
       <td>
