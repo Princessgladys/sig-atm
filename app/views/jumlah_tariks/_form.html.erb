@@ -1,0 +1,21 @@
+<%= form_for(@jumlah_tarik) do |f| %>
+  <% if @jumlah_tarik.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@jumlah_tarik.errors.count, "error") %> prohibited this jumlah_tarik from being saved:</h2>
+
+      <ul>
+      <% @jumlah_tarik.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nominal %><br />
+    <%= f.text_field :nominal %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<h1>Listing jumlah_tariks</h1>
+
+<table>
+  <tr>
+    <th>Nominal</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @jumlah_tariks.each do |jumlah_tarik| %>
+  <tr>
+    <td><%= jumlah_tarik.nominal %></td>
+    <td><%= link_to 'Show', jumlah_tarik %></td>
+    <td><%= link_to 'Edit', edit_jumlah_tarik_path(jumlah_tarik) %></td>
+    <td><%= link_to 'Destroy', jumlah_tarik, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Jumlah tarik', new_jumlah_tarik_path %>
