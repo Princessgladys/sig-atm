@@ -8,8 +8,7 @@
   <% @banks.each do |bank| %>
     <tr>
       <td><%= bank.nama_bank %></td>
-      <td>
-        <%= link_to 'Show', bank %> | 
+      <td> 
         <%= link_to 'Edit', edit_bank_path(bank) %> | 
         <%= link_to 'Delete', bank, method: :delete, data: { confirm: 'Are you sure?' } %>
       </td>

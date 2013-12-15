@@ -1,0 +1,21 @@
+<%= form_for(@kategori_atm) do |f| %>
+  <% if @kategori_atm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@kategori_atm.errors.count, "error") %> prohibited this kategori_atm from being saved:</h2>
+
+      <ul>
+      <% @kategori_atm.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :kategori_atm %><br />
+    <%= f.text_field :kategori_atm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
