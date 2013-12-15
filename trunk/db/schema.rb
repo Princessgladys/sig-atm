@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024092101) do
+ActiveRecord::Schema.define(:version => 20131215024015) do
+
+  create_table "atms", :force => true do |t|
+    t.string   "nama_atm"
+    t.string   "lat"
+    t.string   "lng"
+    t.string   "icon"
+    t.string   "picture"
+    t.integer  "bank_id"
+    t.integer  "lokasi_atm_id"
+    t.integer  "kategori_atm_id"
+    t.integer  "nominal_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "banks", :force => true do |t|
     t.string   "nama_bank"
@@ -19,20 +33,22 @@ ActiveRecord::Schema.define(:version => 20131024092101) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "jumlah_tariks", :force => true do |t|
-    t.string   "nominal"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "kategori_atms", :force => true do |t|
+    t.string   "kategori_atm"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "lokasi_atms", :force => true do |t|
-    t.string   "nama_atm"
-    t.integer  "bank_id"
-    t.integer  "jumlah_tarik_id"
-    t.string   "lat"
-    t.string   "lng"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.string   "nama_lokasi"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "min_transaksis", :force => true do |t|
+    t.string   "min_transaksi"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end

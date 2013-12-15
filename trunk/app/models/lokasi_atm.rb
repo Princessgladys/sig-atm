@@ -1,6 +1,5 @@
 class LokasiAtm < ActiveRecord::Base
-  attr_accessible :bank_id, :jumlah_tarik_id, :lat, :lng, :nama_atm
+  attr_accessible :nama_lokasi
 
-  belongs_to :bank
-  belongs_to :jumlah_tarik
+  has_many :atms
 end

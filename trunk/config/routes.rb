@@ -1,5 +1,11 @@
 SigAtm::Application.routes.draw do
-  resources :jumlah_tariks
+  resources :min_transaksis
+
+
+  resources :kategori_atms
+
+
+  resources :atms
 
 
   resources :banks
@@ -7,6 +13,7 @@ SigAtm::Application.routes.draw do
 
   get "admin" => "admin#index", as: "admin"
   get "home" => "home#index", as: "home"
+  get "test" => "home#test", as: "test"
 
   root :to => 'home#index'
 end

@@ -1,23 +1,14 @@
-<div class="span10">
+<div class="span5">
   <table class="table table-striped table-bordered">
     <tr>
-      <th>Nama Atm</th>
-      <th>Nama Bank</th>
-      <th>Nominal</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>Nama Lokasi</th>
       <th>Pilihan</th>
     </tr>
 
   <% @lokasi_atms.each do |lokasi_atm| %>
     <tr>
-      <td><%= lokasi_atm.nama_atm %></td>
-      <td><%= lokasi_atm.bank.nama_bank %></td>
-      <td><%= lokasi_atm.jumlah_tarik.nominal %></td>
-      <td><%= lokasi_atm.lat %></td>
-      <td><%= lokasi_atm.lng %></td>
+      <td><%= lokasi_atm.nama_lokasi %></td>
       <td>
-        <%= link_to 'Show', lokasi_atm %> | 
         <%= link_to 'Edit', edit_lokasi_atm_path(lokasi_atm) %> | 
         <%= link_to 'Delete', lokasi_atm, method: :delete, data: { confirm: 'Are you sure?' } %>
       </td>

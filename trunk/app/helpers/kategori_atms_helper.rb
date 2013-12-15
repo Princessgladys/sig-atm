@@ -1,0 +1,2 @@
+module KategoriAtmsHelper
+end

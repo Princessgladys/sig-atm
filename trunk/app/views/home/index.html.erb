@@ -15,17 +15,29 @@
       });
 
       //tampilkan marker ATM
-        $.getJSON("home.json", function(data) {
+        var urlnya = "home.json?bank_id=" + $("#home_bank_id").val()
+        $.getJSON(urlnya, function(data) {
           for(var i=0; i<data.length; i++){
             var point = new google.maps.LatLng(parseFloat(data[i].lat),parseFloat(data[i].lng));
             var nama_atm = data[i].nama_atm;
-            var id = data[i].id;
-            var html = "<b>"+ nama_atm +"</b>"+
-              "<hr size='1'>";
+            var nama_bank = data[i].nama_bank;
+            var nama_lokasi = data[i].nama_lokasi;
+            var kategori_atm = data[i].nama_kategori;
+            var min_transaksi = data[i].nominal;
+            // var id = data[i].id;
+            var icon = data[i].icon;
+            var html =  "<b>"+ nama_atm +"</b>"+
+                        "<br/>Bank: <b>"+ nama_bank +"</b>"+
+                        "<br/>Lokasi: <b>"+ nama_lokasi +"</b>"+
+                        "<br/>Kategori: <b>"+ kategori_atm +"</b>"+
+                        "<br/>Min Transaksi: <b>"+ min_transaksi +"</b>"+
+                        "<hr size='1'>";
 
             var marker = new google.maps.Marker({
               map: map,
-              position: point
+              position: point,
+              // icon: "assets/atbank.png"
+              icon: "assets/"+icon
             });
             
             InfoWindow(marker, map, infoWindow, html);
@@ -37,7 +49,7 @@
             google.maps.event.addListener(marker, 'click', function() {
               infoWindow.setContent(html);
               infoWindow.open(map, marker);
-              map.setZoom(15);
+              // map.setZoom(15);
               map.setCenter(marker.getPosition());
             });
 
@@ -49,6 +61,13 @@
       //end
     };
   //end
+
+  $(document).ready(function(){
+    $("#home_bank_id").on("change", function(){
+      initialize();
+    });
+  });
+
   google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
@@ -71,6 +90,6 @@
 
 <div class="row-fluid">
   <div class="well">
-    <h4>Bottom Menu</h4>
+    <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path }, class: "span3" }) %>
   </div>
 </div>

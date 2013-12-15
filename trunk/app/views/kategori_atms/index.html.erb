@@ -1,0 +1,20 @@
+<div class="span5">
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Nama Kategori</th>
+      <th>Pilihan</th>
+    </tr>
+
+  <% @kategori_atms.each do |kategori_atm| %>
+    <tr>
+      <td><%= kategori_atm.nama_kategori %></td>
+      <td>
+        <%= link_to 'Edit', edit_kategori_atm_path(kategori_atm) %> |
+        <%= link_to 'Delete', kategori_atm, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= link_to '+ Tambah', new_kategori_atm_path, class: "btn btn-primary" %>
+</div>
