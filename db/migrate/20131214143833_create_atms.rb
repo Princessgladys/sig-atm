@@ -9,7 +9,7 @@ class CreateAtms < ActiveRecord::Migration
       t.integer :bank_id
       t.integer :lokasi_atm_id
       t.integer :kategori_atm_id
-      t.integer :nominal_id
+      t.integer :min_transaksi_id
 
       t.timestamps
     end
