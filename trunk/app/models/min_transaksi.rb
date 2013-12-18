@@ -1,5 +1,5 @@
 class MinTransaksi < ActiveRecord::Base
-  attr_accessible :min_transaksi
+  attr_accessible :nominal
 
   has_many :atms
 end
