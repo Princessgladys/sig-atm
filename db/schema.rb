@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(:version => 20131215024015) do
     t.integer  "bank_id"
     t.integer  "lokasi_atm_id"
     t.integer  "kategori_atm_id"
-    t.integer  "nominal_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "min_transaksi_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "banks", :force => true do |t|
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(:version => 20131215024015) do
   end
 
   create_table "kategori_atms", :force => true do |t|
-    t.string   "kategori_atm"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "nama_kategori"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "lokasi_atms", :force => true do |t|
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(:version => 20131215024015) do
   end
 
   create_table "min_transaksis", :force => true do |t|
-    t.string   "min_transaksi"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "nominal"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
