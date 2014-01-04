@@ -1,13 +1,17 @@
 <script type="text/javascript">
   //global variable
-    var map = null;
+    var map;
     var infoWindow = new google.maps.InfoWindow;
     var center = new google.maps.LatLng(-8.67829132, 115.21475983);
     var geocoder;
+    var markerDestArr = [];
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
   //end
 
   //initialize
     function initialize() {
+      geocoder = new google.maps.Geocoder();
       map = new google.maps.Map(document.getElementById("mapsGoogle"), {
         center              : center,
         zoom                : 12,
@@ -41,17 +45,24 @@
               icon: "assets/"+icon
             });
             
-            InfoWindow(marker, map, infoWindow, html);
+            InfoWindow(marker, map, infoWindow, html, nama_atm);
           };
         });
 
         //tampilkan infowindow setiap marker
-          function InfoWindow(marker, map, infoWindow, html) {
+          function InfoWindow(marker, map, infoWindow, html, nama_atm) {
             google.maps.event.addListener(marker, 'click', function() {
               infoWindow.setContent(html);
               infoWindow.open(map, marker);
               // map.setZoom(15);
               map.setCenter(marker.getPosition());
+              $("#latTujuan").val(marker.getPosition().lat());
+              $("#lngTujuan").val(marker.getPosition().lng());
+              var xx = marker.getPosition().lat();
+              var yy = marker.getPosition().lng();
+              var endPoint = xx + "," + yy;
+              callDistance(endPoint);
+              $("#tujuan").html(nama_atm);
             });
 
             google.maps.event.addListener(map, 'click', function() {
@@ -60,17 +71,66 @@
           };
         //end
       //end
+
+      //function for manual set location clicked maps
+      google.maps.event.addListener(map, 'click', function(event) {
+        if($('#checkBox').is(':checked')){
+          clearMarkerDest();
+          var markerDest = new google.maps.Marker({
+              position: event.latLng,
+              icon: "assets/user.png",
+              map: map
+          });
+          markerDestArr.push(markerDest);
+
+          $("#latAsal").val(markerDest.getPosition().lat());
+          $("#lngAsal").val(markerDest.getPosition().lng());
+          // alert(event.latLng);
+          var koordinat = new google.maps.LatLng(markerDest.getPosition().lat(), markerDest.getPosition().lng());
+          codeLatLng(koordinat);
+          // $("#tujuanTips").hide();
+        }else{ 
+          infoWindow.close();
+        }
+      });
+    //end
+
+    //this code for clear the marker destination marker > then 1
+      function clearMarkerDest() {
+        for (var i = 0; i < markerDestArr.length; i++ ) {
+          markerDestArr[i].setMap(null);
+        }
+      }
+    //end
+
+    //code for reverse geocode
+      function codeLatLng(koordinat) {
+        geocoder.geocode({'latLng': koordinat}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+              document.getElementById("asal").innerHTML = results[1].formatted_address;
+            } else {
+              alert('No results found');
+            }
+          } else {
+            alert('Geocoder failed due to: ' + status);
+          }
+        });
+      }
+    //end
+    
     };
   //end
 
   $(document).ready(function(){
+    initialize();
+
     $("#home_bank_id").on("change", function(){
       initialize();
     });
 
     //for address search
       function codeAddress() {
-        geocoder = new google.maps.Geocoder();
         var address = document.getElementById('address').value;
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
@@ -124,9 +184,74 @@
       });
     //end
 
+    $("#showRoute").click(function() {
+      showRoute();
+    });
+
   });
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  directionsDisplay = new google.maps.DirectionsRenderer({
+    suppressMarkers: true
+  });
+
+  function callDistance(endPoint) {
+    directionsDisplay.setMap(null);
+    $("#directionsPanel").hide();
+    var a = document.getElementById("latAsal").value;
+    var b = document.getElementById("lngAsal").value;
+    var startPoint = a + "," + b;
+    var request = {
+      origin: startPoint,
+      destination: endPoint,
+      provideRouteAlternatives: true,
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+
+        var route = response.routes[0];
+        for (var i = 0; i < route.legs.length; i++) {
+          $("#distance").html(route.legs[i].distance.text);
+        }
+      }
+      else {                      
+        alert ('Tidak dapat menghitung jarak ATM!, Tentukan lokasi Anda saat ini terlebih dahulu');
+      }
+    });
+  }
+
+  function showRoute() {
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+    $("#directionsPanel").show();
+    var a = document.getElementById("latAsal").value;
+    var b = document.getElementById("lngAsal").value;
+    var startPoint = a + "," + b;
+
+    var x = document.getElementById("latTujuan").value;
+    var y = document.getElementById("lngTujuan").value;
+    var endPoint = x + "," + y;
+    var request = {
+      origin: startPoint,
+      destination: endPoint,
+      provideRouteAlternatives: true,
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      }
+      else {                      
+        directionsDisplay.setMap(null);
+        alert ('Pencarian tidak berhasil!');
+      }
+    });
+  }
+
+  // google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <div class="navbar navbar-fixed-top">
@@ -147,14 +272,52 @@
 </div>
 
 <div class="row-fluid">
+  <ul class="nav nav-list">
+    <li class="tile">
+      <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path } }) %>
+    </li>
+    <li class="tile">
+      <button id="getLocation" class="btn btn-primary" type="button">
+        Cari Posisi
+      </button>
+    </li>
+    <li class="tile">
+      <div class="input-append">
+        <input id="address" type="text" name="address" value="" placeholder="Search for places">
+        <button id="btn_search" class="btn" type="button">Search</button>
+      </div>
+    </li>
+    <li class="tile">
+      <button id="showRoute" class="btn btn-primary" type="button">
+        Cari Rute
+      </button>
+    </li>
+    <li class="tile">
+      <label class="checkbox">
+        <input type="checkbox" id="checkBox"/>
+        <label>Set lokasi saat ini, klik pada Peta!</label>
+      </label>
+    </li>
+    
+
+    <input type="text" id="latAsal" name="latasal" style="display:none;" />
+    <input type="text" id="lngAsal" name="lngasal" style="display:none;" />
+
+    <input type="text" id="latTujuan" name="lattujuan" style="display:none;" />
+    <input type="text" id="lngTujuan" name="lngtujuan" style="display:none;" />
+  </ul>
+</div>
+
+<div class="row-fluid">
   <div class="well">
-    <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path }, class: "span3" }) %>
-
-    <button id="getLocation" class="btn btn-primary" type="button" style="margin-top:-10px;">Cari Posisi</button>
-
-    <div class="input-append">
-      <input class="span10" id="address" type="text" name="address" value="" placeholder="Search for places">
-      <button id="btn_search" class="btn" type="button">Search</button>
-    </div>
+    <ul class="nav nav-list nav-result">
+      <li><h3>Lokasi: </h3><h5 id="asal"></h5></li>
+      <li><h3>ATM Tujuan: </h3><h5 id="tujuan"></h5></li>
+      <li><h3>Jarak ke ATM: </h3><h1 id="distance"></h1></li>
+    </ul>
   </div>
+</div>
+
+<div class="row-fluid">
+  <div id="directionsPanel" class="well" style="display:none;"></div>
 </div>
