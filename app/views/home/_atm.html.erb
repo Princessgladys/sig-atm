@@ -1,0 +1,20 @@
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+      <b>ATM</b>
+    </div>
+  </div>
+  <div id="collapseFour" class="accordion-body collapse in">
+    <div class="accordion-inner">
+      <ul class="unstyled">
+        <li>
+          <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path }, class: "span12" }) %>
+        </li>
+        <li>
+          <h5>Radius:</h5>
+          <input id="radius" type="text" value="10" placeholder="Radius" class="span3"> <b>Km</b>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

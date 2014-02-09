@@ -16,18 +16,89 @@
 @import "bootstrap-responsive";
 
 #wrapper{
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
-#mapsGoogle img {
-  max-width: none;
+#mapsGoogle {
+  height: 615px;
+  width: 100%;
+  img {
+    max-width: none;
+  }
 }
 
-ul.nav.nav-list > li.tile{
-	float: left;
-	margin-right: 10px;
+#directionsPanel{
+  height: 420px;
+  overflow: auto;
 }
 
 img.adp-marker{
-	margin-right: 30px;
+  margin-right: 30px;
+}
+
+.content-map{
+  margin-top: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.side-menu{
+  margin-left: -10px;
+  margin-top: 10px;
+  margin-right: -10px;
+
+  .accordion{
+    margin-bottom: 0px;
+
+    .accordion-group{
+      border: none;
+      border-radius: 2px; 
+    };
+
+    .accordion-inner{
+      background: #eee;
+      border: none;
+    };
+
+    .accordion-heading{
+      background: #0064cd;
+      border: none;
+    };
+  }
+}
+
+.the-navbar{
+  .navbar-inner{
+    background: #0064cd;
+    box-shadow: none;
+    border: none;
+  };
+
+  .brand{
+    color: #222;
+    text-shadow: none; 
+  };
+
+  ul.nav > li{
+    > a{
+      color: #222;
+      text-shadow: none;
+
+      &:hover{
+        background: #fff;
+      }
+    };
+
+    &.active > a{
+      color: #222;
+      text-shadow: none;
+      background: #fff;
+      box-shadow: none;
+
+      &:hover{
+        background: #fff;
+        box-shadow: none;
+      }
+    };
+  }
 }
