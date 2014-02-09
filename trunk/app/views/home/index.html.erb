@@ -7,6 +7,8 @@
     var markerDestArr = [];
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
+    var circle = null;
+    var markerArr = [];
   //end
 
   //initialize
@@ -46,6 +48,7 @@
             });
             
             InfoWindow(marker, map, infoWindow, html, nama_atm);
+            markerArr.push(marker);
           };
         });
 
@@ -76,6 +79,9 @@
       google.maps.event.addListener(map, 'click', function(event) {
         if($('#checkBox').is(':checked')){
           clearMarkerDest();
+          $("#collapseOne").collapse('hide');
+          $("#collapseFour").collapse('hide');
+          $("#collapseTwo").collapse('show');
           var markerDest = new google.maps.Marker({
               position: event.latLng,
               icon: "assets/user.png",
@@ -85,10 +91,10 @@
 
           $("#latAsal").val(markerDest.getPosition().lat());
           $("#lngAsal").val(markerDest.getPosition().lng());
-          // alert(event.latLng);
           var koordinat = new google.maps.LatLng(markerDest.getPosition().lat(), markerDest.getPosition().lng());
           codeLatLng(koordinat);
-          // $("#tujuanTips").hide();
+
+          callRadius('center', markerDest, 'position')
         }else{ 
           infoWindow.close();
         }
@@ -101,6 +107,31 @@
           markerDestArr[i].setMap(null);
         }
       }
+    //end
+
+    //for radius radius
+      function callRadius(center, markerDest, position) {
+        var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
+        if (circle) circle.setMap(null);
+        circle = new google.maps.Circle({
+          map: map,
+          radius: radiusRange,
+          strokeColor: "#00f",
+          strokeOpacity: 0.3,
+          strokeWeight: 2,
+          fillColor: "#00f",
+          fillOpacity: 0.07
+        });
+        
+        circle.bindTo(center, markerDest, position);
+        
+        var myBounds = circle.getBounds();
+        for(var i=markerArr.length; i--;){
+          if(!myBounds.contains(markerArr[i].getPosition())){
+            markerArr[i].setMap(null);
+          }
+        };
+      };
     //end
 
     //code for reverse geocode
@@ -186,6 +217,8 @@
 
     $("#showRoute").click(function() {
       showRoute();
+      $("#collapseTwo").collapse('hide');
+      $("#collapseThree").collapse('show');
     });
 
   });
@@ -254,70 +287,25 @@
   // google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <div class="brand">Find ATMs</div>
-      <ul class="nav pull-right">
-        <li class="active"><%= link_to "Home", home_path %></li>
-        <li><%= link_to "Admin", admin_path %></li>
-        <li><%= link_to "Anggara Putra", "#" %></li>
-      </ul>
+<!-- The navbar -->
+<%= render "home/navbar_top" %>
+
+<!-- The content -->
+<div class="row-fluid">
+  <div class="span9">
+    <div class="content-map">
+      <div id="mapsGoogle"></div>
     </div>
   </div>
-</div>
-
-<div class="row-fluid">
-  <div id="mapsGoogle" class="well" style="height:440px;"></div>
-</div>
-
-<div class="row-fluid">
-  <ul class="nav nav-list">
-    <li class="tile">
-      <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path } }) %>
-    </li>
-    <li class="tile">
-      <button id="getLocation" class="btn btn-primary" type="button">
-        Cari Posisi
-      </button>
-    </li>
-    <li class="tile">
-      <div class="input-append">
-        <input id="address" type="text" name="address" value="" placeholder="Search for places">
-        <button id="btn_search" class="btn" type="button">Search</button>
+  <div class="span3">
+    <div class="side-menu">
+      <div class="accordion" id="accordion2">
+        <%= render "home/map_control" %>
+        <%= render "home/atm" %>
+        <%= render "home/set_lokasi" %>
+        <%= render "home/destinasi" %>
+        <%= render "home/hasil" %>
       </div>
-    </li>
-    <li class="tile">
-      <button id="showRoute" class="btn btn-primary" type="button">
-        Cari Rute
-      </button>
-    </li>
-    <li class="tile">
-      <label class="checkbox">
-        <input type="checkbox" id="checkBox"/>
-        <label>Set lokasi saat ini, klik pada Peta!</label>
-      </label>
-    </li>
-    
-
-    <input type="text" id="latAsal" name="latasal" style="display:none;" />
-    <input type="text" id="lngAsal" name="lngasal" style="display:none;" />
-
-    <input type="text" id="latTujuan" name="lattujuan" style="display:none;" />
-    <input type="text" id="lngTujuan" name="lngtujuan" style="display:none;" />
-  </ul>
-</div>
-
-<div class="row-fluid">
-  <div class="well">
-    <ul class="nav nav-list nav-result">
-      <li><h3>Lokasi: </h3><h5 id="asal"></h5></li>
-      <li><h3>ATM Tujuan: </h3><h5 id="tujuan"></h5></li>
-      <li><h3>Jarak ke ATM: </h3><h1 id="distance"></h1></li>
-    </ul>
+    </div>
   </div>
-</div>
-
-<div class="row-fluid">
-  <div id="directionsPanel" class="well" style="display:none;"></div>
 </div>

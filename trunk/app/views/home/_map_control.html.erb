@@ -1,0 +1,28 @@
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseZero">
+      <b>Kontrol Peta</b>
+    </div>
+  </div>
+  <div id="collapseZero" class="accordion-body collapse">
+    <div class="accordion-inner">
+      <ul class="unstyled">
+        <li><%= link_to "Center Map", "#" %></li>
+        <li><%= link_to "Reload Map", "#" %></li>
+        <li><%= link_to "Clear Map", "#" %></li>
+        <li>
+          <label class="checkbox">
+            <input type="checkbox" id="zoomControl" name="checkbox-peta"/>
+            <label for="zoomControl">Zoom Control</label>
+          </label>
+        </li>
+        <li>
+          <label class="checkbox">
+            <input type="checkbox" id="panControl" name="checkbox-peta"/>
+            <label for="panControl">Pan Control</label>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
