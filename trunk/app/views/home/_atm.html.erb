@@ -8,7 +8,7 @@
     <div class="accordion-inner">
       <ul class="unstyled">
         <li>
-          <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {}, { data: { :url => home_path }, class: "span12" }) %>
+          <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {prompt: "Semua Bank"}, { data: { :url => home_path }, class: "span12" }) %>
         </li>
         <li>
           <h5>Radius:</h5>
