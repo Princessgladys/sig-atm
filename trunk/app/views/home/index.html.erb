@@ -280,12 +280,21 @@
   $(document).ready(function(){
     initialize();
 
+    $("#reloadMap").click(function() {
+      // initialize();
+      location.reload();
+    });
+
+    $("#centerMap").click(function(){
+      var center = new google.maps.LatLng(-8.67829132, 115.21475983);
+      map.setCenter(center);
+    });
+
     $("#showRoute").click(function() {
       showRoute();
       $("#collapseTwo").collapse('hide');
       $("#collapseThree").collapse('show');
     });
-
   });
 
   directionsDisplay = new google.maps.DirectionsRenderer({
