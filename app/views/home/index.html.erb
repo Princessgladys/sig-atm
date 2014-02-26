@@ -9,6 +9,8 @@
     var directionsService = new google.maps.DirectionsService();
     var circle = null;
     var markerArr = [];
+    var markerposArr = [];
+    var markersrcArr = [];
   //end
 
   //initialize
@@ -22,8 +24,7 @@
       });
 
       //tampilkan marker ATM
-        var urlnya = "home.json?bank_id=" + $("#home_bank_id").val()
-        $.getJSON(urlnya, function(data) {
+        $.getJSON("home.json",function(data) {
           for(var i=0; i<data.length; i++){
             var point = new google.maps.LatLng(parseFloat(data[i].lat),parseFloat(data[i].lng));
             var nama_atm = data[i].nama_atm;
@@ -43,12 +44,11 @@
             var marker = new google.maps.Marker({
               map: map,
               position: point,
-              // icon: "assets/atbank.png"
               icon: "assets/"+icon
             });
             
             InfoWindow(marker, map, infoWindow, html, nama_atm);
-            markerArr.push(marker);
+            markerArr.push({marker:marker, bank:nama_bank, lokasi:nama_lokasi});
           };
         });
 
@@ -79,6 +79,8 @@
       google.maps.event.addListener(map, 'click', function(event) {
         if($('#checkBox').is(':checked')){
           clearMarkerDest();
+          clearMarkerSrc();
+          clearMarkerPos();
           $("#collapseOne").collapse('hide');
           $("#collapseFour").collapse('hide');
           $("#collapseTwo").collapse('show');
@@ -101,64 +103,37 @@
       });
     //end
 
-    //this code for clear the marker destination marker > then 1
-      function clearMarkerDest() {
-        for (var i = 0; i < markerDestArr.length; i++ ) {
-          markerDestArr[i].setMap(null);
+    //add location by sensor
+      $("#getLocation").click(function() {
+        if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var markerpos = new google.maps.Marker({
+              map: map,
+              position: pos,
+              icon: "assets/user.png"
+            });
+            markerposArr.push(markerpos);
+            map.setCenter(pos);
+            callRadius('center', markerpos, 'position');
+            clearMarkerDest();
+            clearMarkerSrc();
+            $("#collapseOne").collapse('hide');
+            $("#collapseFour").collapse('hide');
+            $("#collapseTwo").collapse('show');
+            $("#latAsal").val(markerpos.getPosition().lat());
+            $("#lngAsal").val(markerpos.getPosition().lng());
+            var koordinat = new google.maps.LatLng(markerpos.getPosition().lat(), markerpos.getPosition().lng());
+            codeLatLng(koordinat);
+          },  function() {
+                handleNoGeolocation(true);
+              });
+        }   
+        else {
+          handleNoGeolocation(false);
         }
-      }
+      });
     //end
-
-    //for radius radius
-      function callRadius(center, markerDest, position) {
-        var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
-        if (circle) circle.setMap(null);
-        circle = new google.maps.Circle({
-          map: map,
-          radius: radiusRange,
-          strokeColor: "#00f",
-          strokeOpacity: 0.3,
-          strokeWeight: 2,
-          fillColor: "#00f",
-          fillOpacity: 0.07
-        });
-        
-        circle.bindTo(center, markerDest, position);
-        
-        var myBounds = circle.getBounds();
-        for(var i=markerArr.length; i--;){
-          if(!myBounds.contains(markerArr[i].getPosition())){
-            markerArr[i].setMap(null);
-          }
-        };
-      };
-    //end
-
-    //code for reverse geocode
-      function codeLatLng(koordinat) {
-        geocoder.geocode({'latLng': koordinat}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-              document.getElementById("asal").innerHTML = results[1].formatted_address;
-            } else {
-              alert('No results found');
-            }
-          } else {
-            alert('Geocoder failed due to: ' + status);
-          }
-        });
-      }
-    //end
-    
-    };
-  //end
-
-  $(document).ready(function(){
-    initialize();
-
-    $("#home_bank_id").on("change", function(){
-      initialize();
-    });
 
     //for address search
       function codeAddress() {
@@ -169,10 +144,20 @@
             var markersrc = new google.maps.Marker({
               map: map,
               position: koor,
-              title: 'My Position'
+              icon: "assets/user.png"
             });
+            markersrcArr.push(markersrc);
             map.setCenter(koor);
-            map.setZoom(15);
+            callRadius('center', markersrc, 'position');
+            clearMarkerDest();
+            clearMarkerPos();
+            $("#collapseOne").collapse('hide');
+            $("#collapseFour").collapse('hide');
+            $("#collapseTwo").collapse('show');
+            $("#latAsal").val(markersrc.getPosition().lat());
+            $("#lngAsal").val(markersrc.getPosition().lng());
+            var koordinat = new google.maps.LatLng(markersrc.getPosition().lat(), markersrc.getPosition().lng());
+            codeLatLng(koordinat);
           } else {
               alert('Pencarian tidak berhasil! ' + status);
           }
@@ -194,26 +179,106 @@
       //end
     //end
 
-    //add location by sensor
-      $("#getLocation").click(function() {
-        if(navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              var markerpos = new google.maps.Marker({
-                map: map,
-                position: pos,
-                title: 'My Position'
-              });
-              map.setCenter(pos);
-          },  function() {
-                handleNoGeolocation(true);
-              });
-        }   
-        else {
-          handleNoGeolocation(false);
+    //this code for clear the marker destination marker > then 1
+      function clearMarkerDest() {
+        for (var i = 0; i < markerDestArr.length; i++ ) {
+          markerDestArr[i].setMap(null);
         }
-      });
+      }
+
+      function clearMarkerPos() {
+        for (var i = 0; i < markerposArr.length; i++ ) {
+          markerposArr[i].setMap(null);
+        }
+      }
+
+      function clearMarkerSrc() {
+        for (var i = 0; i < markersrcArr.length; i++ ) {
+          markersrcArr[i].setMap(null);
+        }
+      }
     //end
+
+    //for radius radius
+      function callRadius(center, marker, position) {
+        var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
+        if (circle) circle.setMap(null);
+        circle = new google.maps.Circle({
+          map: map,
+          radius: radiusRange,
+          strokeColor: "#00f",
+          strokeOpacity: 0.3,
+          strokeWeight: 2,
+          fillColor: "#00f",
+          fillOpacity: 0.07
+        });
+        
+        circle.bindTo(center, marker, position);
+        
+        var myBounds = circle.getBounds();
+        for(var i=markerArr.length; i--;){
+          if(!myBounds.contains(markerArr[i].marker.getPosition())){
+            markerArr[i].marker.setMap(null);
+          }
+        };
+      };
+    //end
+
+    //code for reverse geocode
+      function codeLatLng(koordinat) {
+        geocoder.geocode({'latLng': koordinat}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+              document.getElementById("asal").innerHTML = results[1].formatted_address;
+            } else {
+              alert('No results found');
+            }
+          } else {
+            alert('Geocoder failed due to: ' + status);
+          }
+        });
+      }
+    //end
+
+    //filter marker
+      function showBank(bank) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].bank == bank) {
+            markerArr[i].marker.setMap(map);
+          }
+        }
+        document.getElementById(bank+"cbx").checked = true;
+      };
+
+      function hideBank(bank) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].bank == bank) {
+            markerArr[i].marker.setMap(null);
+          }
+        }
+        document.getElementById(bank+"cbx").checked = false;
+      };
+
+      function cboxclick(box,bank) {
+        if (box.checked) {
+          showBank(bank);
+        } else {
+          hideBank(bank);
+        }
+      };
+
+      <% Bank.all.each do |bank| %>
+        $('#<%= bank.nama_bank %>cbx').click(function () {
+          cboxclick(this, '<%= bank.nama_bank %>');
+        });
+      <% end %>
+    //end
+    
+    };
+  //end
+
+  $(document).ready(function(){
+    initialize();
 
     $("#showRoute").click(function() {
       showRoute();

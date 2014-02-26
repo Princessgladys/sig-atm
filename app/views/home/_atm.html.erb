@@ -7,9 +7,14 @@
   <div id="collapseFour" class="accordion-body collapse in">
     <div class="accordion-inner">
       <ul class="unstyled">
-        <li>
-          <%= select("home", "bank_id", Bank.all.collect{ |x| [x.nama_bank, x.id] }, {prompt: "Semua Bank"}, { data: { :url => home_path }, class: "span12" }) %>
-        </li>
+        <% Bank.all.each do |bank| %>
+          <li>
+            <label class="checkbox">
+              <input type="checkbox" id="<%= bank.nama_bank %>cbx" name="checkbox_<%= bank.nama_bank %>" value="<%= bank.nama_bank %>" checked />
+              <label for="<%= bank.nama_bank %>cbx"><%= bank.nama_bank %></label>
+            </label>
+          </li>
+        <% end %>
         <li>
           <h5>Radius:</h5>
           <input id="radius" type="text" value="10" placeholder="Radius" class="span3"> <b>Km</b>
