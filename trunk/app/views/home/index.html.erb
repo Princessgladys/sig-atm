@@ -13,13 +13,13 @@
     var markersrcArr = [];
   //end
 
-  //initialize
+  //initialize = fungsi yang akan dipanggil dalam document ready untuk menjalankan fungsi-fungsi lain yang ada di dalamnya.
     function initialize() {
       geocoder = new google.maps.Geocoder();
       map = new google.maps.Map(document.getElementById("mapsGoogle"), {
         center              : center,
         zoom                : 12,
-        // disableDefaultUI    : true,
+        disableDefaultUI    : true,
         mapTypeId           : 'roadmap',
       });
 
@@ -52,7 +52,7 @@
           };
         });
 
-        //tampilkan infowindow setiap marker
+        //tampilkan infowindow setiap marker ATM
           function InfoWindow(marker, map, infoWindow, html, nama_atm) {
             google.maps.event.addListener(marker, 'click', function() {
               infoWindow.setContent(html);
@@ -66,6 +66,9 @@
               var endPoint = xx + "," + yy;
               callDistance(endPoint);
               $("#tujuan").html(nama_atm);
+              $("#collapseOne").collapse('hide');
+              $("#collapseFour").collapse('hide');
+              $("#collapseTwo").collapse('show');
             });
 
             google.maps.event.addListener(map, 'click', function() {
@@ -75,7 +78,7 @@
         //end
       //end
 
-      //function for manual set location clicked maps
+      //untuk menentukan posisi awal dengan click map (Manual Set Location)
       google.maps.event.addListener(map, 'click', function(event) {
         if($('#checkBox').is(':checked')){
           clearMarkerDest();
@@ -103,7 +106,7 @@
       });
     //end
 
-    //add location by sensor
+    //menentukan posisi awal dengan sensor (Web Location)
       $("#getLocation").click(function() {
         if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -135,7 +138,7 @@
       });
     //end
 
-    //for address search
+    //menentukan posisi dengan pencarian berdasarkan nama lokasi
       function codeAddress() {
         var address = document.getElementById('address').value;
         geocoder.geocode( { 'address': address}, function(results, status) {
@@ -164,13 +167,11 @@
         });
       }
 
-      //button search function
+      //tombol pada pencarian lokasi berdasarkan nama lokasi
         $('#btn_search').click(function() {
           codeAddress();
         });
-      //end
 
-      //this code for submit input text with enter button
         $('#address').on('keyup', function(e) {
           if (e.keyCode === 13) {
             $('#btn_search').click();
@@ -179,7 +180,7 @@
       //end
     //end
 
-    //this code for clear the marker destination marker > then 1
+    //fungsi untuk menghilangkan marker Posisi awal (Manual/Sensor/Address)
       function clearMarkerDest() {
         for (var i = 0; i < markerDestArr.length; i++ ) {
           markerDestArr[i].setMap(null);
@@ -199,9 +200,13 @@
       }
     //end
 
-    //for radius radius
+    //radius
       function callRadius(center, marker, position) {
         var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
+        if(radiusRange < 0){
+          alert("Tidak dapat memasukkan nilai radius..");
+          return false;
+        }
         if (circle) circle.setMap(null);
         circle = new google.maps.Circle({
           map: map,
@@ -224,7 +229,7 @@
       };
     //end
 
-    //code for reverse geocode
+    //reverse geocode
       function codeLatLng(koordinat) {
         geocoder.geocode({'latLng': koordinat}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
@@ -273,6 +278,26 @@
         });
       <% end %>
     //end
+
+    //map control
+      $("#mapControl").click(function(){
+      //for zoom control
+        if($('#zoomControl').is(':checked')){
+          map.setOptions({zoomControl:true,disableDoubleClickZoom:true});
+        }else{
+          map.setOptions({zoomControl:false,disableDoubleClickZoom:true});
+        }
+      //end
+
+      //for pan control
+        if($('#panControl').is(':checked')){
+          map.setOptions({panControl:true,draggable:true});
+        }else{
+          map.setOptions({panControl:false,draggable:true});
+        }
+      //end
+      });
+    //end
     
     };
   //end
@@ -281,8 +306,10 @@
     initialize();
 
     $("#reloadMap").click(function() {
-      // initialize();
-      location.reload();
+      initialize();
+      $(".checkbox-bank").prop('checked', true);
+      $("#checkBox").prop('checked', false);
+      $("input#radius").val($("input#radius").data("default"));
     });
 
     $("#centerMap").click(function(){
@@ -358,7 +385,6 @@
     });
   }
 
-  // google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <!-- The navbar -->

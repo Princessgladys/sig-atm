@@ -6,9 +6,13 @@
   </div>
   <div id="collapseZero" class="accordion-body collapse">
     <div class="accordion-inner">
-      <ul class="unstyled">
-        <li><%= link_to "Center Map", "javascript:void(0)", id: "centerMap" %></li>
-        <li><%= link_to "Reload Map", "javascript:void(0)", id: "reloadMap" %></li>
+      <ul id="mapControl" class="unstyled">
+        <li>
+          <button id="centerMap" class="btn btn-link" style="margin-left: -12px;"><i class='icon-home'></i> Center Map</button>
+        </li>
+        <li>
+          <button id="reloadMap" class="btn btn-link" style="margin-left: -12px;"><i class='icon-refresh'></i> Reload Map</button>
+        </li>
         <li>
           <label class="checkbox">
             <input type="checkbox" id="zoomControl" name="checkbox-peta"/>
