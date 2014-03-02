@@ -10,14 +10,14 @@
         <% Bank.all.each do |bank| %>
           <li>
             <label class="checkbox">
-              <input type="checkbox" id="<%= bank.nama_bank %>cbx" name="checkbox_<%= bank.nama_bank %>" value="<%= bank.nama_bank %>" checked />
+              <input type="checkbox" class="checkbox-bank" id="<%= bank.nama_bank %>cbx" name="checkbox_<%= bank.nama_bank %>" value="<%= bank.nama_bank %>" checked />
               <label for="<%= bank.nama_bank %>cbx"><%= bank.nama_bank %></label>
             </label>
           </li>
         <% end %>
         <li>
           <h5>Radius:</h5>
-          <input id="radius" type="text" value="10" placeholder="Radius" class="span3"> <b>Km</b>
+          <input id="radius" type="number" value="1" data-default="1" placeholder="Radius" class="span3"> <b>Km</b>
         </li>
       </ul>
     </div>
