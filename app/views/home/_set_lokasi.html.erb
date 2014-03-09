@@ -1,30 +1,40 @@
 <div class="accordion-group">
   <div class="accordion-heading">
     <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-      <b>Tentukan Posisi</b>
+      <b>Cari Posisi</b>
     </div>
   </div>
   <div id="collapseOne" class="accordion-body collapse in">
     <div class="accordion-inner">
       <ul class="nav nav-list">
         <li>
-          <label class="checkbox">
-            <input type="checkbox" name="checkBox" id="checkBox"/>
-            <label for="checkBox">Klik pada Peta!</label>
+          <label class="radio">
+            <input type="radio" name="radionbutton" id="checkBox" checked />
+            Klik pada Peta!
           </label>
         </li>
-        <li class="nav-header">Atau</li>
         <li>
-          <button id="getLocation" class="btn btn-primary" type="button">
+          <label class="radio">
+            <input type="radio" name="radionbutton" id="radioWebLocation" />
             Dengan Web Location
-          </button>
+          </label>
         </li>
-        <li class="nav-header">Atau</li>
         <li>
-          <div class="input-append">
+          <label class="radio">
+            <input type="radio" name="radionbutton" id="radioSearchAdd" />
+            Dengan Alamat
+          </label>
             <input id="address" class="span10" type="text" name="address" value="" placeholder="Ketik alamat..">
-            <button id="btn_search" class="btn" type="button">Cari</button>
-          </div>
+        </li>
+        <li>
+          <label class="checkbox">
+            <input type="checkbox" name="checkBox" id="setRadius"/>
+            <label for="setRadius"><h5>Radius:</h5></label>
+          </label>
+          <input id="radius" type="number" value="1" data-default="1" placeholder="Radius" class="span3"> <b>Km</b>
+        </li>
+        <li>
+          <button id="btnSetLocation" class="btn btn-primary" type="button">Cari</button>
         </li>
       </ul>
     </div>
