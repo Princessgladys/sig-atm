@@ -32,7 +32,7 @@
             var nama_lokasi = data[i].nama_lokasi;
             var kategori_atm = data[i].nama_kategori;
             var min_transaksi = data[i].nominal;
-            // var id = data[i].id;
+            var id = data[i].id;
             var icon = data[i].icon;
             var html =  "<b>"+ nama_atm +"</b>"+
                         "<br/>Bank: <b>"+ nama_bank +"</b>"+
@@ -48,7 +48,7 @@
             });
             
             InfoWindow(marker, map, infoWindow, html, nama_atm);
-            markerArr.push({marker:marker, bank:nama_bank, lokasi:nama_lokasi});
+            markerArr.push({marker:marker, atm:nama_atm, bank:nama_bank, lokasi:nama_lokasi, atm_id:id, poss:point});
           };
         });
 
@@ -79,8 +79,8 @@
       //end
 
       //untuk menentukan posisi awal dengan click map (Manual Set Location)
-      google.maps.event.addListener(map, 'click', function(event) {
-        if($('#checkBox').is(':checked')){
+      function SetClickMap(){
+        google.maps.event.addListener(map, 'click', function(event) {
           clearMarkerDest();
           clearMarkerSrc();
           clearMarkerPos();
@@ -100,14 +100,12 @@
           codeLatLng(koordinat);
 
           callRadius('center', markerDest, 'position')
-        }else{ 
-          infoWindow.close();
-        }
-      });
+        });
+      };
     //end
 
     //menentukan posisi awal dengan sensor (Web Location)
-      $("#getLocation").click(function() {
+      function webLocation() {
         if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -135,7 +133,7 @@
         else {
           handleNoGeolocation(false);
         }
-      });
+      };
     //end
 
     //menentukan posisi dengan pencarian berdasarkan nama lokasi
@@ -166,18 +164,6 @@
           }
         });
       }
-
-      //tombol pada pencarian lokasi berdasarkan nama lokasi
-        $('#btn_search').click(function() {
-          codeAddress();
-        });
-
-        $('#address').on('keyup', function(e) {
-          if (e.keyCode === 13) {
-            $('#btn_search').click();
-          }
-        });
-      //end
     //end
 
     //fungsi untuk menghilangkan marker Posisi awal (Manual/Sensor/Address)
@@ -202,12 +188,18 @@
 
     //radius
       function callRadius(center, marker, position) {
-        var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
+        if($('#setRadius').is(':checked')){ 
+          var radiusRange = parseInt(document.getElementById('radius').value, 10)*1000;
+        }
+        else{
+          circle.setMap(null);
+        }
         if(radiusRange < 0){
           alert("Tidak dapat memasukkan nilai radius..");
           return false;
         }
         if (circle) circle.setMap(null);
+        $("#atmTerdekat li").remove();
         circle = new google.maps.Circle({
           map: map,
           radius: radiusRange,
@@ -224,6 +216,10 @@
         for(var i=markerArr.length; i--;){
           if(!myBounds.contains(markerArr[i].marker.getPosition())){
             markerArr[i].marker.setMap(null);
+          }
+          else{
+            markerArr[i].marker.setMap(map);
+            $("#atmTerdekat").append("<li><label for='atm"+markerArr[i].atm_id+"' class='checkbox'>"+"<input type='checkbox' name='checkBox' id='atm"+markerArr[i].atm_id+"' data-posisi='"+markerArr[i].poss+"' />"+markerArr[i].atm+"</label></li>");
           }
         };
       };
@@ -279,6 +275,37 @@
       <% end %>
     //end
 
+    //set location control with radio
+      $("#btnSetLocation").click(function(){
+        if($('#checkBox').is(':checked')){
+          alert("Silahkan tentukan lokasi anda dengan klik pada peta!");
+          SetClickMap();
+        }
+        else if($('#radioWebLocation').is(':checked')){
+          webLocation();
+        }
+        else if($('#radioSearchAdd').is(':checked')){
+          codeAddress();
+        }
+      });
+    //
+
+    $("#reloadMap").click(function() {
+      // initialize();
+      for (var i=0; i<markerArr.length; i++) {
+        markerArr[i].marker.setMap(null);
+        markerArr[i].marker.setMap(map);
+      }
+      clearMarkerDest();
+      clearMarkerPos();
+      clearMarkerSrc();
+      if (circle) circle.setMap(null);
+      $("#atmTerdekat").html("");
+      $(".checkbox-bank").prop('checked', true);
+      $("#setRadius").prop('checked', false);
+      $("input#radius").val($("input#radius").data("default"));
+    });
+
     //map control
       $("#mapControl").click(function(){
       //for zoom control
@@ -305,12 +332,22 @@
   $(document).ready(function(){
     initialize();
 
-    $("#reloadMap").click(function() {
-      initialize();
-      $(".checkbox-bank").prop('checked', true);
-      $("#checkBox").prop('checked', false);
-      $("input#radius").val($("input#radius").data("default"));
-    });
+    //tetst
+    <% Atm.all.each do |atm| %>
+      $("body").on("click", "#atm<%= atm.id %>", function(){
+        if($("#atm<%= atm.id %>").is(":checked")){
+          var posisiAtmLat = $(this).data("posisi").split(",")[0];
+          var posisiAtmLng = $(this).data("posisi").split(",")[1];
+          var posisiAtmLatStr = posisiAtmLat.toString();
+          var posisiAtmLngStr = posisiAtmLng.toString();
+          var posisiAtmLatStrFix = posisiAtmLatStr.slice(1);
+          var posisiAtmLngStrFix = posisiAtmLngStr.split(")")[0];
+          var koordinatAtm = new google.maps.LatLng(posisiAtmLatStrFix, posisiAtmLngStrFix);
+          map.setCenter(koordinatAtm);
+        }
+      });
+    <% end %>
+    //end
 
     $("#centerMap").click(function(){
       var center = new google.maps.LatLng(-8.67829132, 115.21475983);
