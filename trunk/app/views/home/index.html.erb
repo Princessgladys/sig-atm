@@ -11,7 +11,6 @@
     var markerArr = [];
     var markerposArr = [];
     var markersrcArr = [];
-    var globalHtml;
   //end
 
   //initialize = fungsi yang akan dipanggil dalam document ready untuk menjalankan fungsi-fungsi lain yang ada di dalamnya.
@@ -70,6 +69,12 @@
               $("#collapseOne").collapse('hide');
               $("#collapseFour").collapse('hide');
               $("#collapseTwo").collapse('show');
+              <% Atm.all.each do |atm| %>
+                var atmLabel = $("#atm<%= atm.id %>").data('atm');
+                if(atmLabel == nama_atm){
+                  $("#atm<%= atm.id %>").prop('checked', true);
+                }
+              <% end %>
             });
 
             google.maps.event.addListener(map, 'click', function() {
