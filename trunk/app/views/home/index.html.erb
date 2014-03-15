@@ -11,6 +11,7 @@
     var markerArr = [];
     var markerposArr = [];
     var markersrcArr = [];
+    var globalHtml;
   //end
 
   //initialize = fungsi yang akan dipanggil dalam document ready untuk menjalankan fungsi-fungsi lain yang ada di dalamnya.
@@ -219,7 +220,7 @@
           }
           else{
             markerArr[i].marker.setMap(map);
-            $("#atmTerdekat").append("<li><label for='atm"+markerArr[i].atm_id+"' class='checkbox'>"+"<input type='checkbox' name='checkBox' id='atm"+markerArr[i].atm_id+"' data-posisi='"+markerArr[i].poss+"' />"+markerArr[i].atm+"</label></li>");
+            $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' />"+markerArr[i].atm+"</label></li>");
           }
         };
       };
@@ -291,7 +292,6 @@
     //
 
     $("#reloadMap").click(function() {
-      // initialize();
       for (var i=0; i<markerArr.length; i++) {
         markerArr[i].marker.setMap(null);
         markerArr[i].marker.setMap(map);
@@ -304,6 +304,8 @@
       $(".checkbox-bank").prop('checked', true);
       $("#setRadius").prop('checked', false);
       $("input#radius").val($("input#radius").data("default"));
+      directionsDisplay.setMap(null);
+      infoWindow.close();
     });
 
     //map control
@@ -343,7 +345,11 @@
           var posisiAtmLatStrFix = posisiAtmLatStr.slice(1);
           var posisiAtmLngStrFix = posisiAtmLngStr.split(")")[0];
           var koordinatAtm = new google.maps.LatLng(posisiAtmLatStrFix, posisiAtmLngStrFix);
-          map.setCenter(koordinatAtm);
+          // map.setCenter(koordinatAtm);
+          for (var i=0; i<markerArr.length; i++) {
+            if($(this).data("atm") == markerArr[i].atm)
+            google.maps.event.trigger(markerArr[i].marker,"click");
+          }
         }
       });
     <% end %>
@@ -352,6 +358,7 @@
     $("#centerMap").click(function(){
       var center = new google.maps.LatLng(-8.67829132, 115.21475983);
       map.setCenter(center);
+      map.setZoom(12);
     });
 
     $("#showRoute").click(function() {
