@@ -1,6 +1,6 @@
 <div class="accordion-group">
   <div class="accordion-heading">
-    <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+    <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" title="Pilih salah satu metode untuk menentukan lokasi saat ini. Jika ingin menambahkan radius, centang checkbox radius, kemudian tentukan jarak radius yang diinginkan. Tekan tombol cari untuk menjalankan.">
       <b>Cari Posisi</b>
     </div>
   </div>
@@ -26,15 +26,18 @@
           </label>
             <input id="address" class="span10" type="text" name="address" value="" placeholder="Ketik alamat..">
         </li>
-        <li>
+        <li class="radius-box">
           <label class="checkbox">
             <input type="checkbox" name="checkBox" id="setRadius"/>
-            <label for="setRadius"><h5>Radius:</h5></label>
+            <h5>Radius:</h5>
           </label>
           <input id="radius" type="number" value="1" data-default="1" placeholder="Radius" class="span3"> <b>Km</b>
         </li>
         <li>
-          <button id="btnSetLocation" class="btn btn-primary" type="button">Cari</button>
+          <br>
+          <center>
+          <button id="btnSetLocation" class="btn btn-primary btn-large" type="button">Cari</button>
+          </center>
         </li>
       </ul>
     </div>
