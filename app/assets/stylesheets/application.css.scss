@@ -151,3 +151,13 @@ li.jarak-atm{
     border: 1px solid #c8c8c8;
   }
 }
+
+li.radius-box{
+  label h5{
+    margin-bottom: 0px;
+  }
+
+  input[type="number"]{
+    margin-top: -5px;
+  }
+}

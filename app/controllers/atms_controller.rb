@@ -18,6 +18,7 @@ class AtmsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js { render layout: false } # show.html.erb
       format.json { render json: @atm }
     end
   end
