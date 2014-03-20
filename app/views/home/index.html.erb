@@ -14,7 +14,8 @@
   //end
 
   //initialize = fungsi yang akan dipanggil dalam document ready untuk menjalankan fungsi-fungsi lain yang ada di dalamnya.
-    function initialize() {
+  $(document).ready(function(){
+    // function initialize() {
       geocoder = new google.maps.Geocoder();
       map = new google.maps.Map(document.getElementById("mapsGoogle"), {
         center              : center,
@@ -39,8 +40,7 @@
                         "<br/>Lokasi: <b>"+ nama_lokasi +"</b>"+
                         "<br/>Kategori: <b>"+ kategori_atm +"</b>"+
                         "<br/>Min Transaksi: <b>"+ min_transaksi +"</b>"+
-                        "<hr size='1'>";
-
+                        "<br/>Jarak: <b id='jarakhasil'></b>";
             var marker = new google.maps.Marker({
               map: map,
               position: point,
@@ -55,8 +55,6 @@
         //tampilkan infowindow setiap marker ATM
           function InfoWindow(marker, map, infoWindow, html, nama_atm) {
             google.maps.event.addListener(marker, 'click', function() {
-              infoWindow.setContent(html);
-              infoWindow.open(map, marker);
               // map.setZoom(15);
               map.setCenter(marker.getPosition());
               $("#latTujuan").val(marker.getPosition().lat());
@@ -65,6 +63,7 @@
               var yy = marker.getPosition().lng();
               var endPoint = xx + "," + yy;
               callDistance(endPoint);
+              showRoute();
               $("#tujuan").html(nama_atm);
               $("#collapseOne").collapse('hide');
               $("#collapseFour").collapse('hide');
@@ -75,6 +74,8 @@
                   $("#atm<%= atm.id %>").prop('checked', true);
                 }
               <% end %>
+              infoWindow.open(map, marker);
+              infoWindow.setContent(html);
             });
 
             google.maps.event.addListener(map, 'click', function() {
@@ -345,11 +346,8 @@
       });
     //end
     
-    };
+    // };
   //end
-
-  $(document).ready(function(){
-    initialize();
 
     //tetst
     <% Atm.all.each do |atm| %>
@@ -367,6 +365,7 @@
             if($(this).data("atm") == markerArr[i].atm)
             google.maps.event.trigger(markerArr[i].marker,"click");
           }
+          showRoute();
         }
       });
     <% end %>
@@ -390,7 +389,7 @@
   });
 
   function callDistance(endPoint) {
-    directionsDisplay.setMap(null);
+    // directionsDisplay.setMap(null);
     $("#directionsPanel").hide();
     var a = document.getElementById("latAsal").value;
     var b = document.getElementById("lngAsal").value;
@@ -409,6 +408,7 @@
         var route = response.routes[0];
         for (var i = 0; i < route.legs.length; i++) {
           $("#distance").html(route.legs[i].distance.text);
+          $("#jarakhasil").html(route.legs[i].distance.text);
         }
       }
       else {                      
