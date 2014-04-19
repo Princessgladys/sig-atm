@@ -33,7 +33,11 @@
             var nama_lokasi = data[i].nama_lokasi;
             var kategori_atm = data[i].nama_kategori;
             var min_transaksi = data[i].nominal;
-            var id = data[i].id;
+            var atmId = data[i].id;
+            var bankId = data[i].bank_id;
+            var mtransaksiId = data[i].min_transaksi_id;
+            var lokasiId = data[i].lokasi_atm_id;
+            var kategoriId = data[i].kategori_atm_id;
             var icon = data[i].icon;
             var html =  "<b>"+ nama_atm +"</b>"+
                         "<br/>Bank: <b>"+ nama_bank +"</b>"+
@@ -48,7 +52,7 @@
             });
             
             InfoWindow(marker, map, infoWindow, html, nama_atm);
-            markerArr.push({marker:marker, atm:nama_atm, bank:nama_bank, lokasi:nama_lokasi, atm_id:id, poss:point});
+            markerArr.push({marker:marker, atm:nama_atm, bank:nama_bank, lokasi:nama_lokasi, atm_id:atmId, poss:point, bank_id:bankId, min_t_id:mtransaksiId, lokasi_id:lokasiId, kategori_id:kategoriId, is_show_bank:"show", is_show_mtrans:"show", is_show_category:"show", is_show_lokasi:"show"});
           };
         });
 
@@ -224,19 +228,19 @@
         for(var i=markerArr.length; i--;){
           $(".checkbox-bank:checked").each(function(){
             var chbxBank = $(this).val();
-            if(markerArr[i].bank == chbxBank){
+            if(markerArr[i].bank_id == chbxBank){
               if($('#setRadius').is(':checked')){
                 if(!myBounds.contains(markerArr[i].marker.getPosition())){
                   markerArr[i].marker.setMap(null);
                 }
-                else{ 
+                else{
                   markerArr[i].marker.setMap(map);
-                  $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' />"+markerArr[i].atm+"</label></li>");
+                  $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
                 }
               }
               else{
                 markerArr[i].marker.setMap(map);
-                $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' />"+markerArr[i].atm+"</label></li>");
+                $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
               }
             }
           });
@@ -260,38 +264,179 @@
       }
     //end
 
-    //filter marker
-      function showBank(bank) {
+    //Filter Marker Bank
+      function showMarkerBank(bank) {
         for (var i=0; i<markerArr.length; i++) {
-          if (markerArr[i].bank == bank) {
-            markerArr[i].marker.setMap(map);
+          if (markerArr[i].bank_id == bank) {
+            if (markerArr[i].is_show_mtrans == "show") {
+              if (markerArr[i].is_show_category == "show") {
+                if (markerArr[i].is_show_lokasi == "show") {
+                  markerArr[i].marker.setMap(map);
+                }
+              }
+            }
+            markerArr[i].is_show_bank = "show";
           }
         }
-        document.getElementById(bank+"cbx").checked = true;
+        document.getElementById("chbx_bank_"+bank).checked = true;
       };
 
-      function hideBank(bank) {
+      function hideMarkerBank(bank) {
         for (var i=0; i<markerArr.length; i++) {
-          if (markerArr[i].bank == bank) {
+          if (markerArr[i].bank_id == bank) {
             markerArr[i].marker.setMap(null);
+            markerArr[i].is_show_bank = "hide";
           }
         }
-        document.getElementById(bank+"cbx").checked = false;
+        document.getElementById("chbx_bank_"+bank).checked = false;
       };
 
-      function cboxclick(box,bank) {
+      function checkboxBank(box,bank) {
         if (box.checked) {
-          showBank(bank);
+          showMarkerBank(bank);
         } else {
-          hideBank(bank);
+          hideMarkerBank(bank);
         }
       };
 
-      <% Bank.all.each do |bank| %>
-        $('#<%= bank.nama_bank %>cbx').click(function () {
-          cboxclick(this, '<%= bank.nama_bank %>');
+      $(".checkbox-bank").each(function(){
+        var cbxBankId = $(this).val();
+        $("body").on("click","#chbx_bank_"+cbxBankId+"", function() {
+          checkboxBank(this, cbxBankId);
         });
-      <% end %>
+      });
+    //end
+
+    //Filter Marker Min Transaksi
+      function showMarkerMinTransaksi(min_transaksi) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].min_t_id == min_transaksi) {
+            if (markerArr[i].is_show_bank == "show") {
+              if (markerArr[i].is_show_category == "show") {
+                if (markerArr[i].is_show_lokasi == "show") {
+                  markerArr[i].marker.setMap(map);
+                }
+              }
+            }
+            markerArr[i].is_show_mtrans = "show"
+          }
+        }
+        document.getElementById("chbx_mtransaksi_"+min_transaksi).checked = true;
+      };
+
+      function hideMarkerMinTransaksi(min_transaksi) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].min_t_id == min_transaksi) {
+            markerArr[i].marker.setMap(null);
+            markerArr[i].is_show_mtrans = "hide"
+          }
+        }
+        document.getElementById("chbx_mtransaksi_"+min_transaksi).checked = false;
+      };
+
+      function checkboxMinTransaksi(box,min_transaksi) {
+        if(box.checked){
+          showMarkerMinTransaksi(min_transaksi);
+        }
+        else{
+          hideMarkerMinTransaksi(min_transaksi);
+        }
+      };
+
+      $(".checkbox-min-transaksi").each(function(){
+        var cbxMinTranId = $(this).val();
+        $("body").on("click","#chbx_mtransaksi_"+cbxMinTranId+"", function() {
+          checkboxMinTransaksi(this, cbxMinTranId);
+        });
+      });
+    //end
+
+    //Filter Marker Kategori
+      function showMarkerKategori(kategori) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].kategori_id == kategori) {
+            if (markerArr[i].is_show_bank == "show") {
+              if (markerArr[i].is_show_mtrans == "show") {
+                if (markerArr[i].is_show_lokasi == "show") {
+                  markerArr[i].marker.setMap(map);
+                }
+              }
+            }
+            markerArr[i].is_show_category = "show"
+          }
+        }
+        document.getElementById("chbx_kategori_"+kategori).checked = true;
+      };
+
+      function hideMarkerKategori(kategori) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].kategori_id == kategori) {
+            markerArr[i].marker.setMap(null);
+            markerArr[i].is_show_category = "hide"
+          }
+        }
+        document.getElementById("chbx_kategori_"+kategori).checked = false;
+      };
+
+      function checkboxKategori(box,kategori) {
+        if(box.checked){
+          showMarkerKategori(kategori);
+        }
+        else{
+          hideMarkerKategori(kategori);
+        }
+      };
+
+      $(".checkbox-kategori").each(function(){
+        var cbxKateId = $(this).val();
+        $("body").on("click","#chbx_kategori_"+cbxKateId+"", function() {
+          checkboxKategori(this, cbxKateId);
+        });
+      });
+    //end
+
+    //Filter Marker Lokasi
+      function showMarkerLokasi(lokasi) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].lokasi_id == lokasi) {
+            if (markerArr[i].is_show_bank == "show") {
+              if (markerArr[i].is_show_mtrans == "show") {
+                if (markerArr[i].is_show_category == "show") {
+                  markerArr[i].marker.setMap(map);
+                }
+              }
+            }
+            markerArr[i].is_show_lokasi = "show"
+          }
+        }
+        document.getElementById("chbx_lokasi_"+lokasi).checked = true;
+      };
+
+      function hideMarkerLokasi(lokasi) {
+        for (var i=0; i<markerArr.length; i++) {
+          if (markerArr[i].lokasi_id == lokasi) {
+            markerArr[i].marker.setMap(null);
+            markerArr[i].is_show_lokasi = "hide"
+          }
+        }
+        document.getElementById("chbx_lokasi_"+lokasi).checked = false;
+      };
+
+      function checkboxLokasi(box,lokasi) {
+        if(box.checked){
+          showMarkerLokasi(lokasi);
+        }
+        else{
+          hideMarkerLokasi(lokasi);
+        }
+      };
+
+      $(".checkbox-lokasi").each(function(){
+        var cbxLokasiId = $(this).val();
+        $("body").on("click","#chbx_lokasi_"+cbxLokasiId+"", function() {
+          checkboxLokasi(this, cbxLokasiId);
+        });
+      });
     //end
 
     //set location control with radio
@@ -349,7 +494,7 @@
     // };
   //end
 
-    //tetst
+  //show rute from atm tujuan list
     <% Atm.all.each do |atm| %>
       $("body").on("click", "#atm<%= atm.id %>", function(){
         if($("#atm<%= atm.id %>").is(":checked")){
@@ -369,7 +514,7 @@
         }
       });
     <% end %>
-    //end
+  //end
 
     $("#centerMap").click(function(){
       var center = new google.maps.LatLng(-8.67829132, 115.21475983);
@@ -462,7 +607,7 @@
     <div class="side-menu">
       <div class="accordion" id="accordion2">
         <%= render "home/map_control" %>
-        <%= render "home/atm" %>
+        <%= render "home/filter" %>
         <%= render "home/set_lokasi" %>
         <%= render "home/destinasi" %>
         <%= render "home/hasil" %>

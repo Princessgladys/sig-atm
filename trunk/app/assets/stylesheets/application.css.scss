@@ -19,8 +19,20 @@
   margin-top: 40px;
 }
 
+#wrapper_admin{
+  margin-top: 50px;
+}
+
 #mapsGoogle {
   height: 615px;
+  width: 100%;
+  img {
+    max-width: none;
+  }
+}
+
+#maps_form {
+  height: 400px;
   width: 100%;
   img {
     max-width: none;
