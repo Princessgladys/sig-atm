@@ -1,0 +1,58 @@
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+      <b>Filter Marker</b>
+    </div>
+  </div>
+  <div id="collapseFour" class="accordion-body collapse">
+    <div class="accordion-inner">
+      <h5>Bank:</h5>
+      <ul class="unstyled">
+        <% Bank.all.each do |bank| %>
+          <li>
+            <label class="checkbox">
+              <input type="checkbox" class="checkbox-filter checkbox-bank" id="chbx_bank_<%= bank.id %>" name="checkbox_<%= bank.nama_bank %>" value="<%= bank.id %>" checked />
+              <label for="chbx_bank_<%= bank.id %>"><%= bank.nama_bank %></label>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+
+      <h5>Minimal Transaksi:</h5>
+      <ul class="unstyled">
+        <% MinTransaksi.all.each do |mintransaksi| %>
+          <li>
+            <label class="checkbox">
+              <input type="checkbox" class="checkbox-filter checkbox-min-transaksi" id="chbx_mtransaksi_<%= mintransaksi.id %>" name="checkbox_<%= mintransaksi.nominal %>" value="<%= mintransaksi.id %>" checked />
+              <label for="chbx_mtransaksi_<%= mintransaksi.id %>"><%= mintransaksi.nominal %></label>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+
+      <h5>Kategori ATM:</h5>
+      <ul class="unstyled">
+        <% KategoriAtm.all.each do |kategori| %>
+          <li>
+            <label class="checkbox">
+              <input type="checkbox" class="checkbox-filter checkbox-kategori" id="chbx_kategori_<%= kategori.id %>" name="checkbox_<%= kategori.nama_kategori %>" value="<%= kategori.id %>" checked />
+              <label for="chbx_kategori_<%= kategori.id %>"><%= kategori.nama_kategori %></label>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+
+      <h5>Lokasi:</h5>
+      <ul class="unstyled">
+        <% LokasiAtm.all.each do |lokasi| %>
+          <li>
+            <label class="checkbox">
+              <input type="checkbox" class="checkbox-filter checkbox-lokasi" id="chbx_lokasi_<%= lokasi.id %>" name="checkbox_<%= lokasi.nama_lokasi %>" value="<%= lokasi.id %>" checked />
+              <label for="chbx_lokasi_<%= lokasi.id %>"><%= lokasi.nama_lokasi %></label>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
