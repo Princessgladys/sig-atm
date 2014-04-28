@@ -226,24 +226,40 @@
         
         var myBounds = circle.getBounds();
         for(var i=markerArr.length; i--;){
-          $(".checkbox-bank:checked").each(function(){
-            var chbxBank = $(this).val();
-            if(markerArr[i].bank_id == chbxBank){
+          // $(".checkbox-bank:checked").each(function(){
+            // var chbxBank = $(this).val();
+            // if(markerArr[i].bank_id == chbxBank){
               if($('#setRadius').is(':checked')){
                 if(!myBounds.contains(markerArr[i].marker.getPosition())){
                   markerArr[i].marker.setMap(null);
                 }
                 else{
-                  markerArr[i].marker.setMap(map);
-                  $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
+                  if (markerArr[i].is_show_bank == "show") {
+                    if (markerArr[i].is_show_mtrans == "show") {
+                      if (markerArr[i].is_show_category == "show") {
+                        if (markerArr[i].is_show_lokasi == "show") {
+                          markerArr[i].marker.setMap(map);
+                          $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
+                        }
+                      }
+                    }
+                  }
                 }
               }
               else{
-                markerArr[i].marker.setMap(map);
-                $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
+                if (markerArr[i].is_show_bank == "show") {
+                  if (markerArr[i].is_show_mtrans == "show") {
+                    if (markerArr[i].is_show_category == "show") {
+                      if (markerArr[i].is_show_lokasi == "show") {
+                        markerArr[i].marker.setMap(map);
+                        $("#atmTerdekat").append("<li><label class='radio'>"+"<input type='radio' name='radioButton' id='atm"+markerArr[i].atm_id+"' class='atm-terdekat' data-posisi='"+markerArr[i].poss+"' data-atm='"+markerArr[i].atm+"' value='"+markerArr[i].atm_id+"' />"+markerArr[i].atm+"</label></li>");
+                      }
+                    }
+                  }
+                }
               }
-            }
-          });
+            // }
+          // });
         };
       };
     //end
@@ -464,7 +480,7 @@
       clearMarkerSrc();
       if (circle) circle.setMap(null);
       $("#atmTerdekat").html("");
-      $(".checkbox-bank").prop('checked', true);
+      $(".checkbox-filter").prop('checked', true);
       $("#setRadius").prop('checked', false);
       $("input#radius").val($("input#radius").data("default"));
       directionsDisplay.setMap(null);
