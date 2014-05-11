@@ -1,0 +1,46 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :nama_lengkap, "Nama Lengkap" %>
+    <%= f.text_field :nama_lengkap %>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, "Email" %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="control-group">
+    <%= f.label :password, "Password" %>
+    <%= f.text_field :password %>
+  </div>
+  <div class="control-group">
+    <%= f.label :password_confirmation, "Konfirmasi Password" %>
+    <%= f.text_field :password_confirmation %>
+  </div>
+  <div class="control-group">
+    <%= f.label :alamat, "Alamat" %>
+    <%= f.text_field :alamat %>
+  </div>
+  <div class="control-group">
+    <%= f.label :no_tlp, "Telepon" %>
+    <%= f.text_field :no_tlp %>
+  </div>
+  <div class="control-group">
+    <%= f.label :user_role_id, "Pilih Akses" %>
+    <%= f.collection_select(:user_role_id, UserRole.all, :id, :role_name, {:prompt => true}) %>
+  </div>
+  <div class="control-group">
+    <%= f.submit "Simpan", class: "btn btn-primary" %>
+    <%= link_to "Kembali", users_path, class: "btn" %>
+  </div>
+<% end %>

@@ -4,6 +4,9 @@
   <li class="<%= 'active' if controller_name == 'kategori_atms' %>"><%= link_to "Kategori ATM", kategori_atms_path %></li>
   <li class="<%= 'active' if controller_name == 'lokasi_atms' %>"><%= link_to "Lokasi ATM", lokasi_atms_path %></li>
   <li class="<%= 'active' if controller_name == 'min_transaksis' %>">
-  	<%= link_to "Minimal Transaksi", min_transaksis_path %>
+    <%= link_to "Minimal Transaksi", min_transaksis_path %>
+  </li>
+  <li class="<%= 'active' if controller_name == 'users' %>">
+    <%= link_to "Tabel User", users_path %>
   </li>
 </ul>

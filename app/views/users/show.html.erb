@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nama lengkap:</b>
+  <%= @user.nama_lengkap %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Password digest:</b>
+  <%= @user.password_digest %>
+</p>
+
+<p>
+  <b>Alamat:</b>
+  <%= @user.alamat %>
+</p>
+
+<p>
+  <b>No tlp:</b>
+  <%= @user.no_tlp %>
+</p>
+
+<p>
+  <b>User role:</b>
+  <%= @user.user_role_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
