@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nama_lengkap: MyString
+  email: MyString
+  password_digest: MyString
+  alamat: MyString
+  no_tlp: MyString
+  user_role_id: 1
+
+two:
+  nama_lengkap: MyString
+  email: MyString
+  password_digest: MyString
+  alamat: MyString
+  no_tlp: MyString
+  user_role_id: 1
