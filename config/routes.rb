@@ -10,7 +10,20 @@ SigAtm::Application.routes.draw do
   resources :user_roles
   resources :min_transaksis
   resources :kategori_atms
-  resources :atms
+
+  resources :atms do
+    member do
+      get "edit_atm_user"
+    end
+    
+    collection do
+      post "create_atm_user"
+      put "update_atm_user"
+      get "new_atm_user"
+      get "index_atm_user"
+    end
+  end
+  
   resources :banks
   resources :lokasi_atms
 
