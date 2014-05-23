@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
 
   belongs_to :user_role
+  has_many :atms
 end

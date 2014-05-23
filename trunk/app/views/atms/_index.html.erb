@@ -1,0 +1,33 @@
+<div class="span12">
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Nama ATM</th>
+      <th>Nama Bank</th>
+      <th>Kategori ATM</th>
+      <th>Minimal Transaksi</th>
+      <th>Lokasi ATM</th>
+      <th>User</th>
+      <th>Status</th>
+      <th>Pilihan</th>
+    </tr>
+
+  <% @atms.each do |atm| %>
+    <tr>
+      <td><%= atm.nama_atm %></td>
+      <td><%= atm.bank.nama_bank %></td>
+      <td><%= atm.kategori_atm.nama_kategori %></td>
+      <td><%= atm.min_transaksi.nominal %></td>
+      <td><%= atm.lokasi_atm.nama_lokasi %></td>
+      <td><%= atm.user.nama_lengkap %></td>
+      <td><span class="<%= (atm.is_approved == true) ? raw('label label-success') : raw('label label-important') %>"><%= (atm.is_approved == true) ? raw("Approved") : raw("Not-Approved") %></span></td>
+      <td>
+        <%= link_to 'Lihat', atm, class: "btn btn-mini btn-info" %>
+        <%= link_to 'Edit', edit_atm_path(atm), class: "btn btn-mini btn-primary" %>
+        <%= link_to 'Delete', atm, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= link_to '+ Tambah', new_atm_path, class: "btn btn-primary" %>
+</div>

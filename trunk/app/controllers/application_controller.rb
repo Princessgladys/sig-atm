@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-  	if current_user == nil
-  		redirect_to root_path
-  	end
+    if current_user == nil
+      redirect_to root_path
+    end
   end
 
   helper_method :current_user

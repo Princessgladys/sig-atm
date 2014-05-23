@@ -3,11 +3,15 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if current_user.user_role_id == 1
+      @users = User.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @users }
+      end
+    else
+      redirect_to home_path, alert: "Tidak bisa mengakses halaman ini."
     end
   end
 
