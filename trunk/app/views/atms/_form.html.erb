@@ -90,7 +90,7 @@
       <% if current_user.user_role_id == 1 %>
         <div class="field">
           <%= f.label :is_approved, "Pilih Status Atm" %>
-          <%= f.select :is_approved, [['Approved', 1], ['Not-Approved', 0]], prompt: true %>
+          <%= f.select :is_approved, [['Diterima', 1], ['Menunggu', 0], ['Tidak Diterima', 2]], prompt: true %>
         </div>
       <% else %>
         <% if @atm.new_record? %>
