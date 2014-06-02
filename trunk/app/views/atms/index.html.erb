@@ -18,9 +18,8 @@
       <td><%= atm.kategori_atm.nama_kategori %></td>
       <td><%= atm.min_transaksi.nominal %></td>
       <td><%= atm.lokasi_atm.nama_lokasi %></td>
-      <td><%= atm.user.nama_lengkap %></td>
-      <td><span class="<%= (atm.is_approved == true) ? raw('label label-success') : raw('label label-important') %>"><%= (atm.is_approved == true) ? raw("Approved") : raw("Not-Approved") %></span></td>
-      <td>
+      <td><%= atm.user.nama_lengkap rescue "-" %></td>
+      <td><span class="<%= ('label label-success' if atm.is_approved == 1) or ('label label-important' if atm.is_approved == 2) or ('label label-warning' if atm.is_approved == 0) %>"><%= ("Diterima" if atm.is_approved == 1) or ("Tidak Diterima" if atm.is_approved == 2) or ("Menunggu" if atm.is_approved == 0) %></span></td>
         <%= link_to 'Lihat', atm, class: "btn btn-mini btn-info" %>
         <%= link_to 'Edit', edit_atm_path(atm), class: "btn btn-mini btn-primary" %>
         <%= link_to 'Delete', atm, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>

@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { render layout: 'autorize' }
       format.json { render json: @user }
     end
   end
