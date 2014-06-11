@@ -1,6 +1,6 @@
 <div class="row-fluid">
-  <div class="offset7 span5">
-    <%= form_tag sessions_path, class: "form-horizontal" do %>
+  <div id="login_box">
+    <%= form_tag sessions_path do %>
       <div class="control-group">
         <div class="controls">
           <h2>Log in</h2>
@@ -20,8 +20,10 @@
       </div>
       <div class="control-group">
         <div class="controls">
-          <%= submit_tag "Log in", class: "btn btn-primary btn-large" %>
-          <h6>New user? Please <%= link_to "Sign up", sign_up_path %></h6>
+          <center>
+            <%= submit_tag "Log in", class: "btn btn-primary btn-large" %>
+            <h6>New user? Please <%= link_to "Sign up", sign_up_path %></h6>
+          </center>
         </div>
       </div>
     <% end %>
