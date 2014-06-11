@@ -23,6 +23,32 @@
   margin-top: 50px;
 }
 
+.wrapper{
+  position: relative;
+
+  &.autorize{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url('login_bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+#login_box{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-top: -115px;
+  margin-left: -110px;
+  height: 230px;
+  width: 220px;
+  padding: 10px;
+  background-color: rgba(#000, 0.20);
+  // border: 2px solid #eee;
+}
+
 #mapsGoogle {
   height: 615px;
   width: 100%;
