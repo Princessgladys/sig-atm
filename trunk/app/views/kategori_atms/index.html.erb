@@ -9,8 +9,8 @@
     <tr>
       <td><%= kategori_atm.nama_kategori %></td>
       <td>
-        <%= link_to 'Edit', edit_kategori_atm_path(kategori_atm) %> |
-        <%= link_to 'Delete', kategori_atm, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Edit', edit_kategori_atm_path(kategori_atm), class: "btn btn-primary btn-mini" %>
+        <%= link_to 'Delete', kategori_atm, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-mini" %>
       </td>
     </tr>
   <% end %>

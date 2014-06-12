@@ -75,7 +75,7 @@ class UsersController < ApplicationController
         format.html { redirect_to root_path, notice: 'Sign up was successfully.' }
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "sign_up" }
+        format.html { render action: "sign_up", layout: "autorize" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

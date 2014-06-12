@@ -207,3 +207,14 @@ li.radius-box{
   width: 100%;
   z-index: 9999;
 }
+
+input[type=text].field-with-errors,
+input[type=password].field-with-errors,
+select.field-with-errors,
+textarea.field-with-errors{
+  border: 1px solid #9d261d;
+}
+
+.form-wrapper{
+  width: 220px;
+}
