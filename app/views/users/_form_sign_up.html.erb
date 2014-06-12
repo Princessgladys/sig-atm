@@ -1,62 +1,68 @@
-<%= form_for(@user, url: registration_users_path(@user), html: { class: "form-horizontal" }) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for(@user, url: registration_users_path(@user), html: { class: "form-vertical" }) do |f| %>
+  <div class="form-wrapper">
+    <div class="control-group">
+      <div class="controls">
+        <h2>Sign up</h2>
+      </div>
     </div>
+    <div class="control-group">
+      <%#= f.label :nama_lengkap, "Nama Lengkap*", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :nama_lengkap, placeholder: "Nama Lengkap" %>
+        <span id="nama_lengkap_error" class="error-message"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%#= f.label :email, "Email*", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :email, placeholder: "Email" %>
+        <span id="email_error" class="error-message"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%#= f.label :password, "Password*", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :password, placeholder: "Password" %>
+        <span id="password_error" class="error-message"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%#= f.label :password_confirmation, "Confirmation*", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :password_confirmation, placeholder: "Konfirmasi Password" %>
+        <span id="password_confirmation_error" class="error-message"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%#= f.label :alamat, "Alamat", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :alamat, placeholder: "Alamat" %>
+        <span id="alamat_error" class="error-message"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%#= f.label :no_tlp, "Telepon", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :no_tlp, placeholder: "Telepon" %>
+        <span id="no_tlp_error" class="error-message"></span>
+      </div>
+    </div>
+    
+    <%= f.hidden_field :user_role_id, value: "2" %>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Submit", class: "btn btn-primary btn-large" %>
+      </div>
+    </div>
+    <%= link_to "Login", root_path %>
+  </div>
+<% end %>
+
+<% if @user.errors.any? %>
+  <% @user.errors.each do |field, message| %>
+    <script type="text/javascript">
+      $("#user_<%=j field.to_s %>").addClass("field-with-errors");
+      $("#<%=j field.to_s %>_error").html("<%=j message %>").addClass("alert alert-error");
+    </script>
   <% end %>
-
-  <div class="control-group">
-    <div class="controls">
-      <h2>Sign up</h2>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :nama_lengkap, "Nama Lengkap*", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :nama_lengkap, placeholder: "Nama Lengkap" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :email, "Email*", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :email, placeholder: "Email" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :password, "Password*", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :password, placeholder: "Password" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :password_confirmation, "Confirmation*", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :password_confirmation, placeholder: "Konfirmasi Password" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :alamat, "Alamat", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :alamat, placeholder: "Alamat" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%#= f.label :no_tlp, "Telepon", class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :no_tlp, placeholder: "Telepon" %>
-    </div>
-  </div>
-  
-  <%= f.hidden_field :user_role_id, value: "2" %>
-  <div class="control-group">
-    <div class="controls">
-      <%= f.submit "Submit", class: "btn btn-primary btn-large" %>
-    </div>
-  </div>
 <% end %>

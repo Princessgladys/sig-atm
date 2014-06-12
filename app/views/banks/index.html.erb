@@ -9,8 +9,8 @@
     <tr>
       <td><%= bank.nama_bank %></td>
       <td> 
-        <%= link_to 'Edit', edit_bank_path(bank) %> | 
-        <%= link_to 'Delete', bank, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Edit', edit_bank_path(bank), class: "btn btn-primary btn-mini" %>
+        <%= link_to 'Delete', bank, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-mini" %>
       </td>
     </tr>
   <% end %>

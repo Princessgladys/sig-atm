@@ -17,9 +17,9 @@
         <td><%= user.no_tlp %></td>
         <td><%= user.user_role.role_name %></td>
         <td>
-          <%= link_to 'View', user %> |
-          <%= link_to 'Edit', edit_user_path(user) %> |
-          <%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%#= link_to 'View', user %>
+          <%= link_to 'Edit', edit_user_path(user), class: "btn btn-primary btn-mini" %>
+          <%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-mini" %>
         </td>
       </tr>
     <% end %>
