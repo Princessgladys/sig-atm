@@ -39,12 +39,24 @@
             var lokasiId = data[i].lokasi_atm_id;
             var kategoriId = data[i].kategori_atm_id;
             var icon = data[i].icon;
+            var nama_user = data[i].nama_lengkap;
+            var role_user = data[i].user_role_id;
+            
+            // Cek Ditambahkan oleh berdasarkan role id untuk user dan nama_lengkap untuk admin
+            if(role_user.toString() === "1"){
+              var cek_nama_user = "Admin"
+            }else{
+              var cek_nama_user = nama_user
+            }
+
             var html =  "<b>"+ nama_atm +"</b>"+
                         "<br/>Bank: <b>"+ nama_bank +"</b>"+
                         "<br/>Lokasi: <b>"+ nama_lokasi +"</b>"+
                         "<br/>Kategori: <b>"+ kategori_atm +"</b>"+
                         "<br/>Min Transaksi: <b>"+ min_transaksi +"</b>"+
+                        "<br/>Ditambahkan Oleh: <b>"+ cek_nama_user +"</b>"+
                         "<br/>Jarak Terdekat: <b id='jarakhasil'></b>";
+
             var marker = new google.maps.Marker({
               map: map,
               position: point,
