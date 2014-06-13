@@ -72,25 +72,25 @@
       </div> -->
       <div class="field">
         <%= f.label :bank_id, "Bank" %>
-        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank, {:prompt => true}) %>
+        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
       </div>
       <div class="field">
         <%= f.label :kategori_atm_id, "Kategori ATM" %>
-        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori, {:prompt => true}) %>
+        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
       </div>
       <div class="field">
         <%= f.label :lokasi_atm_id, "Lokasi ATM" %>
-        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi, {:prompt => true}) %>
+        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
       </div>
       <div class="field">
         <%= f.label :min_transaksi_id, "Minimal Transaksi" %>
-        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal, {:prompt => true}) %>
+        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
       </div>
 
       <% if current_user.user_role_id == 1 %>
         <div class="field">
           <%= f.label :is_approved, "Pilih Status Atm" %>
-          <%= f.select :is_approved, [['Diterima', 1], ['Menunggu', 0], ['Tidak Diterima', 2]], prompt: true %>
+          <%= f.select :is_approved, [['Diterima', 1], ['Menunggu', 0], ['Tidak Diterima', 2]] %>
         </div>
       <% else %>
         <% if @atm.new_record? %>
@@ -151,19 +151,19 @@
       </div> -->
       <div class="field">
         <%= f.label :bank_id, "Bank" %>
-        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank, {:prompt => true}) %>
+        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
       </div>
       <div class="field">
         <%= f.label :kategori_atm_id, "Kategori ATM" %>
-        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori, {:prompt => true}) %>
+        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
       </div>
       <div class="field">
         <%= f.label :lokasi_atm_id, "Lokasi ATM" %>
-        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi, {:prompt => true}) %>
+        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
       </div>
       <div class="field">
         <%= f.label :min_transaksi_id, "Minimal Transaksi" %>
-        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal, {:prompt => true}) %>
+        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
       </div><br />
 
       <%= f.hidden_field :is_approved, value: 0 %>
