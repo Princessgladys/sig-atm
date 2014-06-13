@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
+        format.html { redirect_to users_path, notice: 'User telah berhasil ditambahkan.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to root_path, notice: 'Sign up was successfully.' }
+        format.html { redirect_to root_path, notice: 'Berhasil melakukan proses Sign up.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "sign_up", layout: "autorize" }
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_path, notice: 'User telah berhasil diubah.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to users_url, notice: 'User telah berhasil dihapus.' }
       format.json { head :no_content }
     end
   end

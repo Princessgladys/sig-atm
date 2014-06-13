@@ -66,10 +66,10 @@
         <%= f.label :icon, "Marker Icon" %>
         <%= f.text_field :icon %>
       </div>
-      <div class="field">
-        <%= f.label :picture, "Gambar" %>
-        <%= f.text_field :picture %>
-      </div>
+      <!-- <div class="field">
+        <%#= f.label :picture, "Gambar" %>
+        <%#= f.text_field :picture %>
+      </div> -->
       <div class="field">
         <%= f.label :bank_id, "Bank" %>
         <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank, {:prompt => true}) %>
@@ -141,14 +141,14 @@
         <%= f.label :lng, "Longitude" %>
         <%= f.text_field :lng %>
       </div>
-      <div class="field">
-        <%= f.label :icon, "Marker Icon" %>
-        <%= f.text_field :icon %>
-      </div>
-      <div class="field">
-        <%= f.label :picture, "Gambar" %>
-        <%= f.text_field :picture %>
-      </div>
+      <!-- <div class="field">
+        <%#= f.label :icon, "Marker Icon" %>
+        <%#= f.text_field :icon %>
+      </div> -->
+      <!-- <div class="field">
+        <%#= f.label :picture, "Gambar" %>
+        <%#= f.text_field :picture %>
+      </div> -->
       <div class="field">
         <%= f.label :bank_id, "Bank" %>
         <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank, {:prompt => true}) %>

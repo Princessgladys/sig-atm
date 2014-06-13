@@ -84,7 +84,7 @@ class AtmsController < ApplicationController
 
     respond_to do |format|
       if @atm.save
-        format.html { redirect_to atms_path, notice: 'Atm was successfully created.' }
+        format.html { redirect_to atms_path, notice: 'Atm telah berhasil ditambahkan.' }
         format.json { render json: @atm, status: :created, location: @atm }
       else
         format.html { render action: "new" }
@@ -98,7 +98,7 @@ class AtmsController < ApplicationController
 
     respond_to do |format|
       if @atm.save
-        format.html { redirect_to index_atm_user_atms_path, notice: 'Atm was successfully created.' }
+        format.html { redirect_to index_atm_user_atms_path, notice: 'Atm telah berhasil ditambahkan.' }
         # format.json { render json: @atm, status: :created, location: @atm }
       else
         format.html { render action: "new_atm_user" }
@@ -114,7 +114,7 @@ class AtmsController < ApplicationController
 
     respond_to do |format|
       if @atm.update_attributes(params[:atm])
-        format.html { redirect_to atms_path, notice: 'Atm was successfully updated.' }
+        format.html { redirect_to atms_path, notice: 'Atm telah berhasil diubah.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -128,7 +128,7 @@ class AtmsController < ApplicationController
 
     respond_to do |format|
       if @atm.update_attributes(params[:atm])
-        format.html { redirect_to index_atm_user_atms_path, notice: 'Atm was successfully updated.' }
+        format.html { redirect_to index_atm_user_atms_path, notice: 'Atm telah berhasil diubah.' }
         # format.json { head :no_content }
       else
         format.html { render action: "edit_atm_user" }
@@ -144,7 +144,7 @@ class AtmsController < ApplicationController
     @atm.destroy
 
     respond_to do |format|
-      format.html { redirect_to atms_url }
+      format.html { redirect_to atms_url, notice: 'Atm telah berhasil dihapus.' }
       format.js { render layout: false }
       format.json { head :no_content }
     end
