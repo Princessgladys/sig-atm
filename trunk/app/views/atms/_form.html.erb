@@ -35,6 +35,14 @@
   });
 </script>
 
+<div class="row-fluid">
+  <div class="span12">
+    <div class="text-error">*Klik pada peta untuk menentukan posisi ATM <b>(Latitude/Longitude)</b>!</div>
+    <div id="maps_form" class="well"></div>
+  </div>
+</div>
+
+<div class="row-fluid">
 <% if current_user.user_role_id == 1 %>
   <%= form_for(@atm) do |f| %>
     <% if @atm.errors.any? %>
@@ -176,8 +184,4 @@
     </div>
   <% end %>
 <% end %>
-
-<div class="span8">
-  <div class="text-error">*Klik pada peta untuk menentukan posisi ATM <b>(Latitude/Longitude)</b>!</div>
-  <div id="maps_form" class="well"></div>
 </div>
