@@ -101,6 +101,7 @@ img.adp-marker{
     .accordion-heading{
       background: #0064cd;
       border: none;
+      color: #fff;
     };
   }
 }
@@ -113,28 +114,30 @@ img.adp-marker{
   };
 
   .brand{
-    color: #222;
+    color: #fff;
     text-shadow: none; 
   };
 
   ul.nav > li{
     > a{
-      color: #222;
+      color: #fff;
       text-shadow: none;
 
       &:hover{
-        background: #fff;
+        background: #0257B0;
+        color: #fff;
       }
     };
 
     &.active > a{
-      color: #222;
+      color: #fff;
       text-shadow: none;
-      background: #fff;
+      background: #0257B0;
       box-shadow: none;
 
       &:hover{
-        background: #fff;
+        color: #fff;
+        background: #0257B0;
         box-shadow: none;
       }
     };
