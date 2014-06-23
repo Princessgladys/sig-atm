@@ -1,12 +1,12 @@
 <ul class="well nav nav-list">
-  <li class="<%= 'active' if controller_name == 'atms' %>"><%= link_to "Tabel ATM", atms_path %></li>
-  <li class="<%= 'active' if controller_name == 'banks' %>"><%= link_to "Tabel Bank", banks_path %></li>
+  <li class="<%= 'active' if controller_name == 'atms' %>"><%= link_to "Pengelolaan Data ATM", atms_path %></li>
+  <li class="<%= 'active' if controller_name == 'banks' %>"><%= link_to "Pengelolaan Data Bank", banks_path %></li>
   <li class="<%= 'active' if controller_name == 'kategori_atms' %>"><%= link_to "Kategori ATM", kategori_atms_path %></li>
-  <li class="<%= 'active' if controller_name == 'lokasi_atms' %>"><%= link_to "Lokasi ATM", lokasi_atms_path %></li>
+  <li class="<%= 'active' if controller_name == 'lokasi_atms' %>"><%= link_to "Kategori Lokasi ATM", lokasi_atms_path %></li>
   <li class="<%= 'active' if controller_name == 'min_transaksis' %>">
-    <%= link_to "Minimal Transaksi", min_transaksis_path %>
+    <%= link_to "Kategori Transaksi ATM", min_transaksis_path %>
   </li>
   <li class="<%= 'active' if controller_name == 'users' %>">
-    <%= link_to "Tabel User", users_path %>
+    <%= link_to "Pengelolaan Data User", users_path %>
   </li>
 </ul>
