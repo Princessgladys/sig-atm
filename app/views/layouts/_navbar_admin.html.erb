@@ -5,8 +5,20 @@
       <ul class="nav pull-right">
         <li><%= link_to "Home", home_path %></li>
         <li class="active"><%= link_to "Admin", admin_path %></li>
-        <li><%= link_to raw("Logged in as <b>#{current_user.nama_lengkap}</b>"), "#" %></li>
-        <li><%= link_to "Log out", log_out_path %></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+            Logged in as <b><%= current_user.nama_lengkap %></b>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <% if current_user.user_role_id == 2 %>
+              <li><%= link_to "My Atm", index_atm_user_atms_path %></li>
+              <li><%= link_to "Tambah Atm Baru", new_atm_user_atms_path %></li>
+              <li class="divider"></li>
+            <% end %>
+            <li><%= link_to "Log out", log_out_path %></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>

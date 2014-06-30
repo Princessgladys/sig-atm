@@ -8,6 +8,8 @@ gem 'rails', '3.2.12'
 gem 'mysql2', '0.3.11'
 gem 'thin'
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'carrierwave'
+gem 'will_paginate'
 
 
 # Gems used only for assets and not required

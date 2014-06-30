@@ -6,4 +6,7 @@ class Atm < ActiveRecord::Base
   belongs_to :kategori_atm
   belongs_to :min_transaksi
   belongs_to :user
+
+  mount_uploader :icon, ImageUploader
+  mount_uploader :picture, ImageUploader
 end
