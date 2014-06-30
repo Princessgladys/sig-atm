@@ -4,7 +4,7 @@ class AtmsController < ApplicationController
   # GET /atms.json
   def index
     if current_user.user_role_id == 1
-      @atms = Atm.all
+      @atms = Atm.paginate(:per_page => 5, :page => params[:page])
 
       respond_to do |format|
         format.html # index.html.erb

@@ -1,0 +1,43 @@
+/* Large desktop */
+@media (min-width: 1200px) {}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  #wrapper{
+    margin-top: -20px;
+  }
+
+  .wrapper{
+    &.autorize{
+      margin-left: -20px;
+    }
+  }
+
+  #mapsGoogle {
+    height: 400px;
+    // margin: -20px -20px 0 -20px;
+  };
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  #mapsGoogle {
+    height: 400px;
+    // margin: -20px -20px 0 -20px;
+  };
+
+  .wrapper{
+    &.autorize{
+      margin-left: -20px;
+    }
+  }
+
+  #wrapper{
+    margin-top: -20px;
+  }
+}
