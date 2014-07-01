@@ -16,7 +16,7 @@
 @import "bootstrap-responsive";
 
 #wrapper{
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 #wrapper_admin{
@@ -220,4 +220,36 @@ textarea.field-with-errors{
 
 .form-wrapper{
   width: 220px;
+}
+
+table{
+  tr{
+      th{
+        &.text-center{
+          text-align: center;
+        }
+
+        &.text-right{
+          text-align: right;
+        }
+
+        &.text-middle{
+          vertical-align: middle;
+        }
+      }
+
+      td{
+        &.text-center{
+          text-align: center;
+        }
+
+        &.text-right{
+          text-align: right;
+        }
+
+        &.text-middle{
+          vertical-align: middle;
+        }
+      }
+    }
 }
