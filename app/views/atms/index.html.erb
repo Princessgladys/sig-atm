@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-  <li><%= link_to raw("<i class='icon-chevron-left'></i> Admin"), admin_path %> <span class="divider">/</span></li>
+  <li><%= link_to raw("Admin"), admin_path %> <span class="divider">/</span></li>
   <li class="active">Pengelolaan Data ATM</li>
 </ul>
 
@@ -15,23 +15,23 @@
 <div class="row-fluid">
   <table class="table table-striped table-bordered">
     <tr>
-      <th>Gambar</th>
+      <th class="text-center">Gambar</th>
       <th>Nama ATM</th>
       <th>Nama Bank</th>
       <th>Kategori ATM</th>
       <th>Minimal Transaksi</th>
       <th>Lokasi ATM</th>
       <th>User</th>
-      <th>Status</th>
-      <th>Pilihan</th>
+      <th class="text-center">Status</th>
+      <th class="text-right">Pilihan</th>
     </tr>
 
     <% @atms.each do |atm| %>
       <tr>
         <% if atm.picture.blank? %>
-          <td><%= image_tag "no_img.png", width: "100px" %></td>
+          <td class="text-center"><%= image_tag "no_img.png", width: "100px" %></td>
         <% else %>
-          <td><%= image_tag atm.picture_url, width: "100px" %></td>
+          <td class="text-center"><%= image_tag atm.picture_url, width: "100px" %></td>
         <% end %>
         <td><%= image_tag atm.icon_url, width: "20px" %> <%= atm.nama_atm %></td>
         <td><%= atm.bank.nama_bank %></td>
@@ -39,9 +39,9 @@
         <td><%= atm.min_transaksi.nominal %></td>
         <td><%= atm.lokasi_atm.nama_lokasi %></td>
         <td><%= atm.user.nama_lengkap rescue "-" %></td>
-        <td><span class="<%= ('label label-success' if atm.is_approved == 1) or ('label label-important' if atm.is_approved == 2) or ('label label-warning' if atm.is_approved == 0) %>"><%= ("Diterima" if atm.is_approved == 1) or ("Tidak Diterima" if atm.is_approved == 2) or ("Menunggu" if atm.is_approved == 0) %></span></td>
-        <td>
-          <%= link_to 'Lihat', atm, class: "btn btn-mini btn-info" %>
+        <td class="text-center"><span class="<%= ('label label-success' if atm.is_approved == 1) or ('label label-important' if atm.is_approved == 2) or ('label label-info' if atm.is_approved == 0) %>"><%= ("Diterima" if atm.is_approved == 1) or ("Tidak Diterima" if atm.is_approved == 2) or ("Baru" if atm.is_approved == 0) %></span></td>
+        <td class="text-right">
+          <%#= link_to 'Lihat', atm, class: "btn btn-mini btn-info" %>
           <%= link_to 'Edit', edit_atm_path(atm), class: "btn btn-mini btn-primary" %>
           <%= link_to 'Delete', atm, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
         </td>

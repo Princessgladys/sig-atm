@@ -1,4 +1,7 @@
 <div class="row-fluid">
-  <h3>Tambah Atm Baru</h3>
-  <%= render "form" %>
+  <ul class="breadcrumb">
+    <li><%= link_to raw("Data ATM User"), index_atm_user_atms_path %> <span class="divider">/</span></li>
+    <li class="active">Tambah ATM</li>
+  </ul>
 </div>
+<%= render "form" %>
