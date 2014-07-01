@@ -1,20 +1,32 @@
-<div class="span5">
-  <table class="table table-striped table-bordered">
-    <tr>
-      <th>Nama Bank</th>
-      <th>Pilihan</th>
-    </tr>
+<ul class="breadcrumb">
+  <li><%= link_to raw("<i class='fa fa-arrow-circle-left'></i> Admin"), admin_path %> <span class="divider">/</span></li>
+  <li class="active">Pengelolaan Data Bank</li>
+</ul>
 
-  <% @banks.each do |bank| %>
-    <tr>
-      <td><%= bank.nama_bank %></td>
-      <td> 
-        <%= link_to 'Edit', edit_bank_path(bank), class: "btn btn-primary btn-mini" %>
-        <%= link_to 'Delete', bank, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-mini" %>
-      </td>
-    </tr>
-  <% end %>
-  </table>
+<div class="row-fluid">  
+  <div class="span2">
+    <%= link_to raw("<i class='fa fa-plus-circle'></i> Tambah bank"), new_bank_path, class: "btn btn-primary with-margin-bottom" %>
+  </div>  
+</div>
 
-  <%= link_to '+ Tambah', new_bank_path, class: "btn btn-primary" %>
+<div class="row-fluid">
+  <div class="span5">
+    <table class="table table-striped table-bordered">
+      <tr>
+        <th>Nama Bank</th>
+        <th class="text-right">Pilihan</th>
+      </tr>
+
+    <% @banks.each do |bank| %>
+      <tr>
+        <td><%= bank.nama_bank %></td>
+        <td class="text-right"> 
+          <%= link_to 'Edit', edit_bank_path(bank), class: "btn btn-primary btn-mini" %>
+          <%= link_to 'Delete', bank, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-mini" %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+
+  </div>
 </div>
