@@ -1,7 +1,9 @@
 <div class="row-fluid">
   <ul class="breadcrumb">
+    <li><%= link_to raw("<i class='fa fa-arrow-circle-left'></i> Home"), home_path %> <span class="divider">/</span></li>
     <li><%= link_to raw("Data ATM User"), index_atm_user_atms_path %> <span class="divider">/</span></li>
     <li class="active">Tambah ATM</li>
   </ul>
 </div>
+
 <%= render "form" %>

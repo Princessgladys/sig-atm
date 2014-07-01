@@ -1,1 +1,9 @@
+<div class="row-fluid">
+  <ul class="breadcrumb">
+    <li><%= link_to raw("<i class='fa fa-arrow-circle-left'></i> Admin"), admin_path %> <span class="divider">/</span></li>
+    <li><%= link_to raw("Pengelolaan Data User"), users_path %> <span class="divider">/</span></li>
+    <li class="active">Edit Data User</li>
+  </ul>
+</div>
+
 <%= render 'form' %>

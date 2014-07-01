@@ -56,14 +56,14 @@
             var gambarStr = JSON.stringify(gambar);
             var gambarStrSlice = gambarStr.slice(8, -2);
 
-            var html =  "<b>"+ nama_atm +"</b>"+
+            var html =  "<div class='infowindow-content'><b>"+ nama_atm +"</b>"+
                         "<br/>Bank: <b>"+ nama_bank +"</b>"+
                         "<br/>Lokasi: <b>"+ nama_lokasi +"</b>"+
                         "<br/>Kategori: <b>"+ kategori_atm +"</b>"+
                         "<br/>Min Transaksi: <b>"+ min_transaksi +"</b>"+
                         "<br/>Ditambahkan Oleh: <b>"+ cek_nama_user +"</b>"+
                         "<br/><img src='"+gambarStrSlice+"' width='150px'>"+
-                        "<br/>Jarak Terdekat: <b id='jarakhasil'></b>";
+                        "<br/>Jarak Terdekat: <b id='jarakhasil'></b></div>";
 
             var marker = new google.maps.Marker({
               map: map,
@@ -89,9 +89,6 @@
               callDistance(endPoint);
               showRoute();
               $("#tujuan").html(nama_atm);
-              $("#collapseOne").collapse('hide');
-              $("#collapseFour").collapse('hide');
-              $("#collapseTwo").collapse('show');
               <% Atm.all.each do |atm| %>
                 var atmLabel = $("#atm<%= atm.id %>").data('atm');
                 if(atmLabel == nama_atm){
@@ -115,10 +112,6 @@
           clearMarkerDest();
           clearMarkerSrc();
           clearMarkerPos();
-          $("#collapseOne").collapse('hide');
-          $("#collapseTwo").collapse('show');
-          $("#collapseThree").collapse('hide');
-          $("#collapseFour").collapse('hide');
           $("#directionsPanel").html("");
           $("#distance").html("");
           directionsDisplay.setMap(null);
@@ -154,9 +147,6 @@
             callRadius('center', markerpos, 'position');
             clearMarkerDest();
             clearMarkerSrc();
-            $("#collapseOne").collapse('hide');
-            $("#collapseFour").collapse('hide');
-            $("#collapseTwo").collapse('show');
             $("#latAsal").val(markerpos.getPosition().lat());
             $("#lngAsal").val(markerpos.getPosition().lng());
             var koordinat = new google.maps.LatLng(markerpos.getPosition().lat(), markerpos.getPosition().lng());
@@ -187,9 +177,6 @@
             callRadius('center', markersrc, 'position');
             clearMarkerDest();
             clearMarkerPos();
-            $("#collapseOne").collapse('hide');
-            $("#collapseFour").collapse('hide');
-            $("#collapseTwo").collapse('show');
             $("#latAsal").val(markersrc.getPosition().lat());
             $("#lngAsal").val(markersrc.getPosition().lng());
             var koordinat = new google.maps.LatLng(markersrc.getPosition().lat(), markersrc.getPosition().lng());
@@ -560,8 +547,6 @@
 
     $("#showRoute").click(function() {
       showRoute();
-      $("#collapseTwo").collapse('hide');
-      $("#collapseThree").collapse('show');
     });
   });
 
@@ -628,9 +613,6 @@
   }
 
 </script>
-
-<!-- The navbar -->
-<%#= render "home/navbar_top" %>
 
 <!-- The content -->
 <div class="row-fluid">
