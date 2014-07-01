@@ -36,154 +36,335 @@
 </script>
 
 <div class="row-fluid">
-  <div class="span12">
+  <div class="span6">
     <div class="text-error">*Klik pada peta untuk menentukan posisi ATM <b>(Latitude/Longitude)</b>!</div>
-    <div id="maps_form" class="well"></div>
+    <div id="maps_form"></div>
   </div>
-</div>
+  <div class="span6">
+    <% if current_user.user_role_id == 1 %>
+      <%= form_for(@atm) do |f| %>
+        <div class="row-fluid">
+          <% if @atm.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@atm.errors.count, "error") %> prohibited this atm from being saved:</h2>
 
-<div class="row-fluid">
-<% if current_user.user_role_id == 1 %>
-  <%= form_for(@atm) do |f| %>
-    <% if @atm.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@atm.errors.count, "error") %> prohibited this atm from being saved:</h2>
+              <ul>
+              <% @atm.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
 
-        <ul>
-        <% @atm.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="span3">
-      <div class="field">
-        <%= f.label :nama_atm, "Nama ATM" %>
-        <%= f.text_field :nama_atm %>
-      </div>
-      <div class="field">
-        <%= f.label :lat, "Latitude" %>
-        <%= f.text_field :lat %>
-      </div>
-      <div class="field">
-        <%= f.label :lng, "Longitude" %>
-        <%= f.text_field :lng %>
-      </div>
-      <div class="field">
-        <%= f.label :icon, "Marker Icon" %>
-        <%#= f.text_field :icon %>
-        <%= f.file_field :icon %>
-      </div>
-      <div class="field">
-        <%= f.label :picture, "Gambar" %>
-        <%#= f.text_field :picture %>
-        <%= f.file_field :picture %>
-      </div>
-      <div class="field">
-        <%= f.label :bank_id, "Bank" %>
-        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
-      </div>
-      <div class="field">
-        <%= f.label :kategori_atm_id, "Kategori ATM" %>
-        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
-      </div>
-      <div class="field">
-        <%= f.label :lokasi_atm_id, "Lokasi ATM" %>
-        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
-      </div>
-      <div class="field">
-        <%= f.label :min_transaksi_id, "Minimal Transaksi" %>
-        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
-      </div>
-
-      <% if current_user.user_role_id == 1 %>
-        <div class="field">
-          <%= f.label :is_approved, "Pilih Status Atm" %>
-          <%= f.select :is_approved, [['Diterima', 1], ['Menunggu', 0], ['Tidak Diterima', 2]] %>
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :lat, raw("<b>Latitude</b>") %>
+              <div class="controls">
+                <%= f.text_field :lat %>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :lng, raw("<b>Longitude</b>") %>
+              <div class="controls">
+                <%= f.text_field :lng %>
+              </div>
+            </div>
+          </div>
         </div>
-      <% else %>
-        <% if @atm.new_record? %>
-          <%= f.hidden_field :is_approved, value: 0 %>
-        <% else %>
-          <%= f.hidden_field :is_approved %>
-        <% end %>
+
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :nama_atm, raw("<b>Nama Atm</b>") %>
+              <div class="controls">
+                <%= f.text_field :nama_atm %>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :bank_id, raw("<b>Pilih Bank</b>") %>
+              <div class="controls">
+                <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :min_transaksi_id, raw("<b>Pilih Minimal Transaksi</b>") %>
+              <div class="controls">
+                <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :kategori_atm_id, raw("<b>Pilih Kategori Atm</b>") %>
+              <div class="controls">
+                <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :lokasi_atm_id, raw("<b>Pilih Lokasi Atm</b>") %>
+              <div class="controls">
+                <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <%= f.label :picture, raw("<b>Upload Gambar</b>") %>
+              <div class="controls">
+                <%= f.file_field :picture %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <%= f.label :icon, raw("<b>Marker Icon</b>") %>
+              <div class="controls">
+                <%= f.file_field :icon %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :is_approved, raw("<b>Pilih Status Atm</b>") %>
+              <div class="controls">
+                <%= f.select :is_approved, [['Diterima', 1], ['Menunggu', 0], ['Tidak Diterima', 2]] %>
+              </div>
+            </div>
+          </div>
+          
+          <% if @atm.new_record? %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+          <% else %>
+            <%= f.hidden_field :user_id %>
+          <% end %>
+        </div>
+
+        <div class="row-fluid">
+          <div class="control-group modal-footer">
+            <%= f.submit "Simpan", class: "btn btn-primary" %>
+            <%= link_to "Kembali", atms_path, class: "btn" %>
+          </div>
+        </div>
       <% end %>
-      <br />
+
+    <% else %>
+
       <% if @atm.new_record? %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-      <% else %>
-        <%= f.hidden_field :user_id %>
-      <% end %>
+        <%= form_for(@atm, url: create_atm_user_atms_path(@atm) ) do |f| %>
+          <div class="row-fluid">
+            <% if @atm.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@atm.errors.count, "error") %> prohibited this atm from being saved:</h2>
 
-      <div class="actions">
-        <%= f.submit "Simpan", class: "btn btn-primary" %>
-        <%= link_to "Kembali", atms_path, class: "btn" %>
-      </div>
-    </div>
-  <% end %>
+                <ul>
+                <% @atm.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-<% else %>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lat, raw("<b>Latitude</b>") %>
+                <div class="controls">
+                  <%= f.text_field :lat %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lng, raw("<b>Longitude</b>") %>
+                <div class="controls">
+                  <%= f.text_field :lng %>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <%= form_for(@atm, url: create_atm_user_atms_path(@atm) ) do |f| %>
-    <% if @atm.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@atm.errors.count, "error") %> prohibited this atm from being saved:</h2>
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :nama_atm, raw("<b>Nama Atm</b>") %>
+                <div class="controls">
+                  <%= f.text_field :nama_atm %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :bank_id, raw("<b>Pilih Bank</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :min_transaksi_id, raw("<b>Pilih Minimal Transaksi</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :kategori_atm_id, raw("<b>Pilih Kategori Atm</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <ul>
-        <% @atm.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lokasi_atm_id, raw("<b>Pilih Lokasi Atm</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <%= f.label :picture, raw("<b>Upload Gambar</b>") %>
+                <div class="controls">
+                  <%= f.file_field :picture %>
+                </div>
+              </div>
+
+              <%= f.hidden_field :is_approved, value: 0 %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+            </div>
+          </div>
+
+          <div class="row-fluid">
+            <div class="control-group modal-footer">
+              <%= f.submit "Simpan", class: "btn btn-primary" %>
+              <%= link_to "Kembali", index_atm_user_atms_path, class: "btn" %>
+            </div>
+          </div>
         <% end %>
-        </ul>
-      </div>
+
+      <% else %>
+
+        <%= form_for(@atm, url: update_atm_user_path(@atm) ) do |f| %>
+          <div class="row-fluid">
+            <% if @atm.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@atm.errors.count, "error") %> prohibited this atm from being saved:</h2>
+
+                <ul>
+                <% @atm.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lat, raw("<b>Latitude</b>") %>
+                <div class="controls">
+                  <%= f.text_field :lat %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lng, raw("<b>Longitude</b>") %>
+                <div class="controls">
+                  <%= f.text_field :lng %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :nama_atm, raw("<b>Nama Atm</b>") %>
+                <div class="controls">
+                  <%= f.text_field :nama_atm %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :bank_id, raw("<b>Pilih Bank</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :min_transaksi_id, raw("<b>Pilih Minimal Transaksi</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
+                </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :kategori_atm_id, raw("<b>Pilih Kategori Atm</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <%= f.label :lokasi_atm_id, raw("<b>Pilih Lokasi Atm</b>") %>
+                <div class="controls">
+                  <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <%= f.label :picture, raw("<b>Upload Gambar</b>") %>
+                <div class="controls">
+                  <%= f.file_field :picture %>
+                </div>
+              </div>
+
+              <%= f.hidden_field :is_approved, value: 0 %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+            </div>
+          </div>
+
+          <div class="row-fluid">
+            <div class="control-group modal-footer">
+              <%= f.submit "Simpan", class: "btn btn-primary" %>
+              <%= link_to "Kembali", index_atm_user_atms_path, class: "btn" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
-
-    <div class="span3">
-      <div class="field">
-        <%= f.label :nama_atm, "Nama ATM" %>
-        <%= f.text_field :nama_atm %>
-      </div>
-      <div class="field">
-        <%= f.label :lat, "Latitude" %>
-        <%= f.text_field :lat %>
-      </div>
-      <div class="field">
-        <%= f.label :lng, "Longitude" %>
-        <%= f.text_field :lng %>
-      </div>
-      <!-- <div class="field">
-        <%#= f.label :icon, "Marker Icon" %>
-        <%#= f.text_field :icon %>
-      </div> -->
-      <div class="field">
-        <%= f.label :picture, "Gambar" %>
-        <%= f.file_field :picture %>
-      </div>
-      <div class="field">
-        <%= f.label :bank_id, "Bank" %>
-        <%= f.collection_select(:bank_id, Bank.all, :id, :nama_bank) %>
-      </div>
-      <div class="field">
-        <%= f.label :kategori_atm_id, "Kategori ATM" %>
-        <%= f.collection_select(:kategori_atm_id, KategoriAtm.all, :id, :nama_kategori) %>
-      </div>
-      <div class="field">
-        <%= f.label :lokasi_atm_id, "Lokasi ATM" %>
-        <%= f.collection_select(:lokasi_atm_id, LokasiAtm.all, :id, :nama_lokasi) %>
-      </div>
-      <div class="field">
-        <%= f.label :min_transaksi_id, "Minimal Transaksi" %>
-        <%= f.collection_select(:min_transaksi_id, MinTransaksi.all, :id, :nominal) %>
-      </div><br />
-
-      <%= f.hidden_field :is_approved, value: 0 %>
-      <%= f.hidden_field :user_id, value: current_user.id %>
-
-      <div class="actions">
-        <%= f.submit "Simpan", class: "btn btn-primary" %>
-        <%= link_to "Kembali", index_atm_user_atms_path, class: "btn" %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+  </div>
 </div>

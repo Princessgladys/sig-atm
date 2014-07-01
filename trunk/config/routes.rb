@@ -18,7 +18,6 @@ SigAtm::Application.routes.draw do
     
     collection do
       post "create_atm_user"
-      put "update_atm_user"
       get "new_atm_user"
       get "index_atm_user"
     end
@@ -27,6 +26,8 @@ SigAtm::Application.routes.draw do
   resources :banks
   resources :lokasi_atms
 
+  put "update_atm_user/:id" => "atms#update_atm_user", as: "update_atm_user"
+  
   get "log_out" => "sessions#destroy", as: "log_out"
   get "sign_up" => "users#sign_up", as: "sign_up"
 

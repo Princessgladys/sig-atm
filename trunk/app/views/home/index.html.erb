@@ -39,6 +39,7 @@
             var lokasiId = data[i].lokasi_atm_id;
             var kategoriId = data[i].kategori_atm_id;
             var icon = data[i].icon;
+            var gambar = data[i].picture;
             var nama_user = data[i].nama_lengkap;
             var role_user = data[i].user_role_id;
             
@@ -49,18 +50,25 @@
               var cek_nama_user = nama_user
             }
 
+            var iconStr = JSON.stringify(icon);
+            var iconStrSlice = iconStr.slice(8, -2);
+
+            var gambarStr = JSON.stringify(gambar);
+            var gambarStrSlice = gambarStr.slice(8, -2);
+
             var html =  "<b>"+ nama_atm +"</b>"+
                         "<br/>Bank: <b>"+ nama_bank +"</b>"+
                         "<br/>Lokasi: <b>"+ nama_lokasi +"</b>"+
                         "<br/>Kategori: <b>"+ kategori_atm +"</b>"+
                         "<br/>Min Transaksi: <b>"+ min_transaksi +"</b>"+
                         "<br/>Ditambahkan Oleh: <b>"+ cek_nama_user +"</b>"+
+                        "<br/><img src='"+gambarStrSlice+"' width='150px'>"+
                         "<br/>Jarak Terdekat: <b id='jarakhasil'></b>";
 
             var marker = new google.maps.Marker({
               map: map,
               position: point,
-              icon: icon
+              icon: iconStrSlice
             });
             
             InfoWindow(marker, map, infoWindow, html, nama_atm);
