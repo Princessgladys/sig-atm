@@ -4,8 +4,16 @@
 </ul>
 
 <div class="row-fluid">
-  <div class="span2">
-    <%= link_to raw("<i class='fa fa-plus-circle'></i> Tambah Atm Baru"), new_atm_user_atms_path, class: "btn btn-primary with-margin-bottom" %>
+  <div class="span6">
+    <%= form_tag index_atm_user_atms_path, method: 'GET', class: "form-inline" do  %>
+      <%= select_tag "filter[is_approved]", options_for_select([["Diterima", 1], ["Menunggu", 0], ["Tidak Diterima", 2]], selected: (session[:filter_atm] == nil)? '' : session[:filter_atm][:is_approved]), prompt: "Pilih Status" %>
+
+      <%= submit_tag "Filter", class: "btn btn-primary", disable_with: "Filtering.." %>
+      <%= link_to "Clear", index_atm_user_atms_path(clear_session: true), class: "btn", disable_with: "Reseting.." %>
+    <% end %>
+  </div>
+  <div class="span6">
+    <%= link_to raw("<i class='fa fa-plus-circle'></i> Tambah Atm Baru"), new_atm_user_atms_path, class: "btn btn-primary pull-right" %>
   </div>
 </div>
 

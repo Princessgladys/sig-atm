@@ -1,10 +1,13 @@
 class AtmsController < ApplicationController
   layout "layouts/admin"
+
+  helper_method :filter_atm
+  
   # GET /atms
   # GET /atms.json
   def index
     if current_user.user_role_id == 1
-      @atms = Atm.paginate(:per_page => 5, :page => params[:page])
+      @atms = Atm.filtering(filter_atm).paginate(:per_page => 5, :page => params[:page])
 
       respond_to do |format|
         format.html # index.html.erb
@@ -17,7 +20,7 @@ class AtmsController < ApplicationController
   end
 
   def index_atm_user
-    @atms = Atm.where("atms.user_id =?", current_user.id)
+    @atms = Atm.filtering(filter_atm).where("atms.user_id =?", current_user.id)
 
     respond_to do |format|
       format.html { render layout: "application" }
@@ -148,5 +151,16 @@ class AtmsController < ApplicationController
       format.js { render layout: false }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def filter_atm
+    if params[:filter]
+      session[:filter_atm] = params[:filter]
+    elsif params[:clear_session]
+      session[:filter_atm] = nil
+    end
+    results = session[:filter_atm]
+    results
   end
 end
