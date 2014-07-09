@@ -9,4 +9,13 @@ class Atm < ActiveRecord::Base
 
   mount_uploader :icon, ImageUploader
   mount_uploader :picture, ImageUploader
+
+  def self.filtering(filter)
+    results = Atm
+    return results if filter.nil?
+
+    results = results.where("is_approved =?", filter[:is_approved]) if !filter[:is_approved].blank?
+
+    results
+  end
 end
