@@ -1,5 +1,6 @@
 class AtmsController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate
   before_filter :authenticate_admin, only: [:index, :show, :new, :edit, :destroy]
 
   helper_method :filter_atm

@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin
-    if current_user == nil and current_user.user_role != 1 
-      redirect_to root_path, alert: "Halaman ini tidak tersedia untuk anda."
+    if current_user.user_role_id != 1 
+      redirect_to home_path, alert: "Halaman ini tidak tersedia untuk anda."
     end
   end
 

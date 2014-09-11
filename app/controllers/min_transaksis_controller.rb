@@ -1,6 +1,6 @@
 class MinTransaksisController < ApplicationController
   layout "layouts/admin"
-  before_filter :authenticate
+  before_filter :authenticate, :authenticate_admin
   # GET /min_transaksis
   # GET /min_transaksis.json
   def index

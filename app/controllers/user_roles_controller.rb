@@ -1,5 +1,5 @@
 class UserRolesController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :authenticate_admin
   # GET /user_roles
   # GET /user_roles.json
   def index
