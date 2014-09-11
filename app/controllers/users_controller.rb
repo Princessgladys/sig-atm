@@ -1,18 +1,19 @@
 class UsersController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate_admin, only: [:index, :show, :new, :edit, :destroy]
   # GET /users
   # GET /users.json
   def index
-    if current_user.user_role_id == 1
+    # if current_user.user_role_id == 1
       @users = User.all
 
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: @users }
       end
-    else
-      redirect_to home_path, alert: "Tidak bisa mengakses halaman ini."
-    end
+    # else
+    #   redirect_to home_path, alert: "Tidak bisa mengakses halaman ini."
+    # end
   end
 
   # GET /users/1

@@ -1,5 +1,6 @@
 class KategoriAtmsController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate
   # GET /kategori_atms
   # GET /kategori_atms.json
   def index

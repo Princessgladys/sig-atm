@@ -9,7 +9,7 @@
       <div class="control-group">
         <%#= label_tag :email, "Email", class: "control-label" %>
         <div class="controls">
-          <%= text_field_tag :email, params[:email], placeholder: "Email" %>
+          <%= text_field_tag :username, params[:username], placeholder: "Username" %>
         </div>
       </div>
       <div class="control-group">
@@ -22,7 +22,8 @@
         <div class="controls">
           <center>
             <%= submit_tag "Log in", class: "btn btn-primary btn-large" %>
-            <h6>User baru? Silakan melakukan <%= link_to "Sign up", sign_up_path %></h6>
+            <hr>
+            Untuk mendaftar, silakan klik <%= link_to raw("<b>disini</b>"), sign_up_path %>, atau masuk sebagai <%= link_to raw("<b>Guest</b>"), home_path %>.
           </center>
         </div>
       </div>
