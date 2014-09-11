@@ -1,22 +1,23 @@
 class AtmsController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate_admin, only: [:index, :show, :new, :edit, :destroy]
 
   helper_method :filter_atm
   
   # GET /atms
   # GET /atms.json
   def index
-    if current_user.user_role_id == 1
+    # if current_user.user_role_id == 1
       @atms = Atm.filtering(filter_atm).paginate(:per_page => 5, :page => params[:page])
 
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: @atms }
       end
-    else
-      redirect_to home_path, alert: "Tidak bisa mengakses halaman ini."
+    # else
+      # redirect_to home_path, alert: "Tidak bisa mengakses halaman ini."
       # flash.now[:alert] = "Tidak bisa mengakses halaman ini."
-    end
+    # end
   end
 
   def index_atm_user

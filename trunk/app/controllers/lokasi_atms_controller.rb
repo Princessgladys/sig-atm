@@ -1,5 +1,6 @@
 class LokasiAtmsController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate
   # GET /lokasi_atms
   # GET /lokasi_atms.json
   def index
