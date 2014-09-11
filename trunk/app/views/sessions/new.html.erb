@@ -1,31 +1,40 @@
 <div class="row-fluid">
   <div id="login_box">
-    <%= form_tag sessions_path do %>
-      <div class="control-group">
-        <div class="controls">
-          <h2>Log in</h2>
+    <% if current_user == nil %>
+      <%= form_tag sessions_path do %>
+        <div class="control-group">
+          <div class="controls">
+            <h2>Log in</h2>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <%#= label_tag :email, "Email", class: "control-label" %>
-        <div class="controls">
-          <%= text_field_tag :username, params[:username], placeholder: "Username" %>
+        <div class="control-group">
+          <%#= label_tag :email, "Email", class: "control-label" %>
+          <div class="controls">
+            <%= text_field_tag :username, params[:username], placeholder: "Username" %>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <%#= label_tag :password, "Password", class: "control-label" %>
-        <div class="controls">
-          <%= password_field_tag :password, "", placeholder: "Password" %>
+        <div class="control-group">
+          <%#= label_tag :password, "Password", class: "control-label" %>
+          <div class="controls">
+            <%= password_field_tag :password, "", placeholder: "Password" %>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <div class="controls">
-          <center>
-            <%= submit_tag "Log in", class: "btn btn-primary btn-large" %>
-            <hr>
-            Untuk mendaftar, silakan klik <%= link_to raw("<b>disini</b>"), sign_up_path %>, atau masuk sebagai <%= link_to raw("<b>Guest</b>"), home_path %>.
-          </center>
+        <div class="control-group">
+          <div class="controls">
+            <center>
+              <%= submit_tag "Log in", class: "btn btn-primary btn-large" %>
+              <hr>
+              Untuk mendaftar, silakan klik <%= link_to raw("<b>disini</b>"), sign_up_path %>, atau masuk sebagai <%= link_to raw("<b>Guest</b>"), home_path %>.
+            </center>
+          </div>
         </div>
+      <% end %>
+    <% else %>
+      Anda telah login sebagai:
+      <h4><%= current_user.username %></h4>
+      Kembali ke <%= link_to "Home", home_path %>
+      <div>
+        <%= link_to "Log out", log_out_path %>
       </div>
     <% end %>
   </div>

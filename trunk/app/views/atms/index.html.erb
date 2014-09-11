@@ -49,7 +49,7 @@
         <td><%= atm.kategori_atm.nama_kategori %></td>
         <td><%= atm.min_transaksi.nominal %></td>
         <td><%= atm.lokasi_atm.nama_lokasi %></td>
-        <td><%= atm.user.nama_lengkap rescue "-" %></td>
+        <td><%= atm.user.username rescue "-" %></td>
         <td class="text-center"><span class="<%= ('label label-success' if atm.is_approved == 1) or ('label label-important' if atm.is_approved == 2) or ('label label-info' if atm.is_approved == 0) %>"><%= ("Diterima" if atm.is_approved == 1) or ("Tidak Diterima" if atm.is_approved == 2) or ("Baru" if atm.is_approved == 0) %></span></td>
         <td class="text-right">
           <%#= link_to 'Lihat', atm, class: "btn btn-mini btn-info" %>

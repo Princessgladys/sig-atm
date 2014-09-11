@@ -5,23 +5,32 @@
         <div class="brand"><b>GIS Pencarian ATM</b></div>
         <ul class="nav pull-right">
           <li class="active"><%= link_to raw("<i class='fa fa-home'></i> Home"), home_path %></li>
-          <% if current_user.user_role_id == 1 %>
+          <% if current_user != nil and current_user.user_role_id == 1 %>
             <li><%= link_to raw("<i class='fa fa-cogs'></i> Admin"), admin_path %></li>
           <% end %>
-          <li class="dropdown">
-            <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-              Logged in as <b><%= current_user.nama_lengkap %></b>
-              <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <% if current_user.user_role_id == 2 %>
-                <li><%= link_to "My Atm", index_atm_user_atms_path %></li>
-                <li><%= link_to "Tambah Atm Baru", new_atm_user_atms_path %></li>
-                <li class="divider"></li>
-              <% end %>
-              <li><%= link_to raw("<i class='fa fa-power-off'></i> Log out"), log_out_path %></li>
-            </ul>
-          </li>
+          <% if current_user != nil %>
+            <li class="dropdown">
+              <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                Logged in as <b><%= current_user.username %></b>
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <% if current_user.user_role_id == 2 %>
+                  <li><%= link_to "My Atm", index_atm_user_atms_path %></li>
+                  <li><%= link_to "Tambah Atm Baru", new_atm_user_atms_path %></li>
+                  <li class="divider"></li>
+                <% end %>
+                <li><%= link_to raw("<i class='fa fa-power-off'></i> Log out"), log_out_path %></li>
+              </ul>
+            </li>
+          <% else %>
+            <li class="dropdown">
+              <%= link_to raw("Logged in as <b>Guest</b> <i class='fa fa-caret-down'></i>"), "#guest", class: "dropdown-toggle", role: "button", data: { toggle: "dropdown" } %>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><%= link_to raw("Log in"), root_path %></li>
+              </ul>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
