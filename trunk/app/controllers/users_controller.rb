@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   layout "layouts/admin"
+  before_filter :authenticate, only: [:index, :show, :new, :edit, :destroy]
   before_filter :authenticate_admin, only: [:index, :show, :new, :edit, :destroy]
   # GET /users
   # GET /users.json
