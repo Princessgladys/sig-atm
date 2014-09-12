@@ -1,6 +1,6 @@
 class BanksController < ApplicationController
   layout "layouts/admin"
-  before_filter :authenticate, :authenticate_admin]
+  before_filter :authenticate, :authenticate_admin
   # GET /banks
   # GET /banks.json
   def index
